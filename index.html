@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ספריית מתודות - אקים</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Rubik', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#3b82f6',   /* חשיבה */
+                            orange: '#f97316', /* גיבוש */
+                            green: '#22c55e',  /* תנועה */
+                            purple: '#a855f7', /* שיח */
+                            teal: '#14b8a6',   /* צוות */
+                            rose: '#f43f5e',   /* יצירה */
+                            dark: '#1e293b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { transition: background-color 0.3s, color 0.3s; }
+        .game-card { transition: all 0.3s ease; }
+        .game-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15); }
+        .dark .game-card:hover { box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.4); }
+        .filter-btn.active { box-shadow: 0 0 0 2px var(--bg-color, white), 0 0 0 4px currentColor; transform: scale(0.95); }
+        .dark .filter-btn.active { --bg-color: #0f172a; }
+        
+        @keyframes popIn {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pop-in { animation: popIn 0.3s ease-out forwards; }
+        
+        /* Custom Scrollbar */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark .custom-scroll::-webkit-scrollbar-thumb { background: #475569; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 antialiased">
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-br from-brand-dark to-slate-700 text-white py-16 shadow-lg relative overflow-hidden transition-colors">
+        <!-- Logo -->
+        <div class="absolute top-4 right-4 md:top-6 md:right-6 z-30 bg-white p-2.5 rounded-2xl shadow-lg flex items-center justify-center transition-transform hover:scale-105 cursor-pointer">
+            <img src="logo.png" alt="לוגו אקים כפר סבא" class="h-10 md:h-14 object-contain">
+        </div>
+
+        <!-- Dark Mode Toggle -->
+        <button id="themeToggle" class="absolute top-4 left-4 md:top-6 md:left-6 z-30 bg-white/20 hover:bg-white/30 p-3 rounded-full shadow-md backdrop-blur-sm transition-all cursor-pointer" title="החלף מצב תצוגה">
+            <svg id="themeIconSun" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <svg id="themeIconMoon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+        </button>
+
+        <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl mt-6 md:mt-0">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-md tracking-tight">ספריית המתודות</h1>
+            <p class="text-xl font-light mb-8 opacity-90">ארגז הכלים החכם למדריכי אקים כפר סבא</p>
+            
+            <!-- Search Bar -->
+            <div class="relative max-w-2xl mx-auto mb-6 group">
+                <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400 group-focus-within:text-brand-blue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <input type="text" id="searchInput" class="block w-full p-4 pr-12 text-gray-900 border-0 rounded-full bg-white shadow-lg focus:ring-4 focus:ring-brand-blue/30 text-lg outline-none transition-all dark:bg-slate-800 dark:text-white" placeholder="חיפוש חופשי (למשל: כדור, שאלות, פתקים...)">
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-3">
+                <button id="randomBtn" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md font-medium py-2.5 px-6 rounded-full shadow-md transition-all flex items-center gap-2 text-sm hover:scale-105 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    הגרל שילוב מתודות
+                </button>
+                <button id="topicBreakdownBtn" class="bg-brand-purple hover:bg-purple-600 text-white border border-brand-purple backdrop-blur-md font-medium py-2.5 px-6 rounded-full shadow-md transition-all flex items-center gap-2 text-sm hover:scale-105 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    פירוק נושא (AI)
+                </button>
+            </div>
+        </div>
+        
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-brand-blue opacity-20 blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-brand-purple opacity-20 blur-3xl pointer-events-none"></div>
+    </header>
+
+    <!-- Smart Filter Bar -->
+    <nav class="sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md shadow-sm z-40 py-4 border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto" id="filterContainer">
+                <button data-filter="movement" data-color="brand-green" class="filter-btn bg-brand-green/10 text-brand-green hover:bg-brand-green hover:text-white px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 shadow-sm cursor-pointer">
+                    🏃‍♂️ תנועה ומרחב
+                </button>
+                <button data-filter="bonding" data-color="brand-orange" class="filter-btn bg-brand-orange/10 text-brand-orange hover:bg-brand-orange hover:text-white px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 shadow-sm cursor-pointer">
+                    🧊 גיבוש וצחוק
+                </button>
+                <button data-filter="thinking" data-color="brand-blue" class="filter-btn bg-brand-blue/10 text-brand-blue hover:bg-brand-blue hover:text-white px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 shadow-sm cursor-pointer">
+                    🧠 חשיבה ותחרות
+                </button>
+                <button data-filter="discussion" data-color="brand-purple" class="filter-btn bg-brand-purple/10 text-brand-purple hover:bg-brand-purple hover:text-white px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 shadow-sm cursor-pointer">
+                    🗣️ שיח וערכים
+                </button>
+                <button data-filter="teamwork" data-color="brand-teal" class="filter-btn bg-brand-teal/10 text-brand-teal hover:bg-brand-teal hover:text-white px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 shadow-sm cursor-pointer">
+                    🤝 עבודת צוות
+                </button>
+                <button data-filter="creative" data-color="brand-rose" class="filter-btn bg-brand-rose/10 text-brand-rose hover:bg-brand-rose hover:text-white px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 shadow-sm cursor-pointer">
+                    🎨 יצירה והבעה
+                </button>
+            </div>
+            <!-- Active Filters Summary -->
+            <div id="filterSummary" class="text-center text-sm font-semibold text-slate-600 dark:text-slate-300 mt-4 hidden bg-slate-100 dark:bg-slate-800 py-2 px-4 rounded-lg flex items-center justify-center gap-1 mx-auto w-max transition-colors">
+                מציג מתודות שהן <span id="filterLogicText" class="text-brand-dark dark:text-white mr-1"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Grid Content -->
+    <main class="container mx-auto px-6 py-10 max-w-7xl relative">
+        
+        <!-- No Results -->
+        <div id="noResults" class="hidden text-center py-16">
+            <svg class="w-40 h-40 mx-auto text-slate-300 dark:text-slate-600 mb-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+            </svg>
+            <h3 class="text-2xl font-bold text-slate-700 dark:text-slate-200">לא מצאנו מתודות כאלו...</h3>
+            <p class="text-slate-500 dark:text-slate-400 mt-2 text-lg">נסו להוריד חלק מהפילטרים או לחפש מילה אחרת.</p>
+            <button id="clearSearchBtn" class="mt-6 px-6 py-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 rounded-full font-medium transition-colors cursor-pointer text-slate-800 dark:text-white">נקה חיפוש</button>
+        </div>
+
+        <!-- The Unified Grid Container (Cards populated via JS) -->
+        <div id="gamesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Dynamic Content Injected Here -->
+        </div>
+    </main>
+
+    <!-- Bottom Banner: Suggest new content -->
+    <div class="container mx-auto px-6 pb-16 max-w-5xl">
+        <section class="bg-gradient-to-r from-brand-orange to-brand-rose rounded-3xl p-8 md:p-10 text-center text-white shadow-lg relative overflow-hidden transition-transform hover:scale-[1.01] duration-300">
+            <h2 class="text-2xl md:text-3xl font-bold mb-3 relative z-10">יש לכם מתודה פצצה? 🚀</h2>
+            <p class="mb-6 opacity-90 text-lg relative z-10">המאגר הזה נבנה על ידי המדריכים ובשביל המדריכים. נשמח לשמוע רעיונות חדשים!</p>
+            <a href="mailto:example@akim.org.il?subject=הצעת%20מתודה%20חדשה%20למאגר" class="inline-block bg-white text-brand-orange font-bold py-3 px-8 rounded-full shadow hover:shadow-lg transform transition relative z-10">הצעת מתודה חדשה</a>
+            <!-- Decor inside banner -->
+            <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 rounded-full bg-white opacity-10 blur-xl pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 -ml-10 -mb-10 w-40 h-40 rounded-full bg-white opacity-10 blur-xl pointer-events-none"></div>
+        </section>
+    </div>
+
+    <footer class="bg-slate-800 text-slate-400 py-8 text-center border-t border-slate-700 transition-colors">
+        <p>נוצר באהבה עבור צוות ההדרכה</p>
+    </footer>
+
+    <!-- FAB (Floating Action Button) for Session Cart -->
+    <button id="sessionFab" class="fixed bottom-6 left-6 z-40 bg-brand-dark dark:bg-slate-700 text-white rounded-full p-4 shadow-xl hover:scale-110 transition-transform flex items-center gap-2 group border border-slate-700 cursor-pointer" title="הפעילות שלי">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+        <span id="sessionBadge" class="absolute -top-2 -right-2 bg-brand-rose text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-800 transition-transform scale-0">0</span>
+    </button>
+
+    <!-- My Session Modal/Drawer -->
+    <div id="sessionModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 w-11/12 max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[85vh]">
+            <div class="bg-brand-dark p-5 text-white flex justify-between items-center shrink-0">
+                <h2 class="text-xl font-bold flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                    סל הפעילות שלי
+                </h2>
+                <button id="closeSessionBtn" class="text-slate-400 hover:text-white transition-colors cursor-pointer">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto custom-scroll grow bg-slate-50 dark:bg-slate-900/50">
+                <ul id="sessionList" class="space-y-3">
+                    <!-- Session items will populate here -->
+                </ul>
+                <div id="emptySessionMsg" class="text-center py-8 text-slate-500 dark:text-slate-400 hidden">
+                    <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+                    הסל ריק. לחצו על סמל התיקייה בכרטיסיות כדי לאסוף לכאן מתודות לפעילות הקרובה שלכם!
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-slate-800 p-4 border-t border-slate-100 dark:border-slate-700 shrink-0">
+                <button id="exportSessionBtn" class="w-full bg-brand-green hover:bg-green-600 text-white font-medium py-3 rounded-xl shadow transition-colors flex justify-center items-center gap-2 cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    העתק הכל לוואטסאפ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Randomizer Modal -->
+    <div id="randomModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 w-11/12 max-w-4xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
+            <div class="bg-gradient-to-r from-brand-purple to-brand-blue p-5 text-white flex justify-between items-center shrink-0">
+                <h2 class="text-2xl font-bold flex items-center gap-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    שילוב אקראי מנצח
+                </h2>
+                <button id="closeModalBtn" class="text-white hover:text-slate-200 transition-colors cursor-pointer">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="p-6 md:p-8 overflow-y-auto grow bg-slate-50 dark:bg-slate-900">
+                <p class="text-slate-600 dark:text-slate-300 mb-6 text-center text-lg font-medium">נסו לשלב את שתי המתודות האלו בפעילות הבאה שלכם:</p>
+                <div id="randomCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+                    <!-- Cards will be injected here -->
+                </div>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-4 border-t border-slate-100 dark:border-slate-700 text-center shrink-0 flex justify-center gap-4">
+                <button id="rerollBtn" class="bg-brand-blue hover:bg-blue-600 text-white font-medium py-2.5 px-8 rounded-full shadow transition-colors flex items-center gap-2 mx-auto cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    הגרל שוב
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Breakdown Modal -->
+    <div id="aiModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 w-11/12 max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[85vh]">
+            <div class="bg-brand-purple p-5 text-white flex justify-between items-center shrink-0">
+                <h2 class="text-xl font-bold flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    סיעור מוחות AI: פירוק לרכיבים
+                </h2>
+                <button id="closeAiBtn" class="text-white/80 hover:text-white transition-colors cursor-pointer">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto custom-scroll grow bg-slate-50 dark:bg-slate-900/50">
+                <!-- Topic Input Area -->
+                <div id="aiTopicInputArea" class="mb-6 hidden">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">איזה נושא או כלי תרצו לפרק?</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="aiTopicInput" class="flex-grow p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:ring-2 focus:ring-brand-purple outline-none" placeholder="למשל: עבודת צוות...">
+                        <button id="aiTopicSubmitBtn" class="bg-brand-purple hover:bg-purple-600 text-white px-5 rounded-xl font-medium transition-colors cursor-pointer">פרק!</button>
+                    </div>
+                </div>
+
+                <div id="aiResultArea" class="hidden">
+                    <h3 id="aiResultTitle" class="text-lg font-bold text-slate-800 dark:text-white mb-4 border-b border-slate-200 dark:border-slate-700 pb-2"></h3>
+                    
+                    <div id="aiLoading" class="flex flex-col items-center justify-center py-8 text-brand-purple hidden">
+                        <svg class="animate-spin w-10 h-10 mb-3" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        <p class="animate-pulse font-medium text-slate-600 dark:text-slate-300">ה-AI שלנו חושב על זה...</p>
+                    </div>
+                    
+                    <div id="aiResultText" class="text-slate-700 dark:text-slate-300 space-y-2 leading-relaxed whitespace-pre-line text-lg font-medium p-2">
+                        <!-- Breakdown text arrives here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="aiFooterArea" class="bg-white dark:bg-slate-800 p-4 border-t border-slate-100 dark:border-slate-700 shrink-0 hidden">
+                <button id="aiRegenerateBtn" class="w-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-medium py-3 rounded-xl transition-colors flex justify-center items-center gap-2 cursor-pointer border border-slate-300 dark:border-slate-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    ג'נרט מחדש לכיוון אחר
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Logic: Data Generation & Interactivity -->
+    <script>
+        // 1. DATA: ALL 63 METHODS
+        const methodsData = [
+            { title: "מונופול", tags: ["thinking"], desc: "משחק לוח שבו מתקדמים בין משבצות, וכל עצירה מפעילה שאלה/משימה. המטרה לצבור הכי הרבה נקודות.", ex: "בנושא בטיחות בדרכים: הגעה למשבצת 'כלא' מחייבת לענות נכונה על 3 שאלות תמרורים כדי להשתחרר.", components: "1. לוח עם מסלול ומשבצות.\n2. התקדמות המבוססת על הטלת קוביות (אקראיות).\n3. הפעלת אירוע, שאלה או משימה בעצירה על משבצת.\n4. צבירת משאבים (כסף, נקודות או נכסים)." },
+            { title: "אליאס (טאבו)", tags: ["bonding", "teamwork"], desc: "מסבירים לקבוצה מושג מהנושא במילים אחרות תחת זמן קצוב, מבלי להשתמש במילות שורש.", ex: "לגרום לקבוצה להגיד 'חופש גדול' מבלי להשתמש במילים האסורות: קיץ, בית ספר, יולי.", components: "1. כרטיסיות עם מילות יעד ורשימת 'מילים אסורות'.\n2. הגבלת זמן (שעון חול או טיימר).\n3. איסור שימוש בשורש המילה או בפנטומימה.\n4. דינמיקה של 'מסביר אחד, קבוצה שלמה מנחשת'." },
+            { title: "איקס עיגול", tags: ["thinking"], desc: "בכל תור עונים שאלה/משימה מהנושא, ואם הצלחת מסמנים X/0 בלוח עד 3 ברצף.", ex: "בחזרה למבחן: כדי לזכות בסימון X בלוח, הקבוצה חייבת לענות נכונה על שאלת תאריכים מתוך כרטיסייה." },
+            { title: "בינגו", tags: ["thinking"], desc: "מכינים לוחות עם מושגים/תמונות מהנושא, המדריך מקריא הגדרות/שאלות, והמשתתפים מסמנים.", ex: "בנושא איכות הסביבה: בלוחות יש 'מיחזור' ו-'קומפוסט'. המנחה מקריא רק הגדרה." },
+            { title: "משחק הזיכרון", tags: ["thinking", "bonding"], desc: "מכינים זוגות קלפים מהנושא (תמונה-מושג / שאלה-תשובה), ומי שמוצא זוג מסביר/נותן דוגמה.", ex: "בלימוד שפה: קלף מראה חיה וקלף את המילה. מי שמוצא זוג חייב לחבר משפט בעל פה." },
+            { title: "רביעיות", tags: ["thinking"], desc: "קלפים מהנושא מחולקים לסטים של 4; שואלים משתתפים על קלפים כדי להשלים 'רביעייה'.", ex: "בנושא מנהיגים: רשימת הרביעייה היא 'ראשי ממשלה', ומשתתף שואל 'האם יש לך את בן גוריון?'." },
+            { title: "נחש מי", tags: ["thinking", "bonding"], desc: "בוחרים קלף סודי מתוך סט דמויות/פריטים מהנושא, ושואלים שאלות כן/לא כדי לפסול אפשרויות.", ex: "בנושא דמויות היסטוריות: הקבוצה שואלת 'האם הדמות שלך חיה במאה ה-20?' או 'האם היא מנהיגה צבאית?'." },
+            { title: "פנטומימה", tags: ["bonding", "creative"], desc: "מציגים בגוף מושג/פעולה מהנושא בלי דיבור, והקבוצה מנחשת.", ex: "חניך עושה פנטומימה של רופא שיניים, והשאר מנחשים ואומרים תכונה חשובה למקצוע." },
+            { title: "אמת או חובה", tags: ["bonding", "movement"], desc: "'אמת' = שאלה מהנושא, 'חובה' = משימה אקטיבית שמדגימה את הנושא.", ex: "בלחץ חברתי: אמת - 'ספר על פעם שנכנעת'. חובה - 'שכנע את המדריך לתת לך משהו'." },
+            { title: "איש תלוי", tags: ["thinking"], desc: "מנחשים מילה/מושג מהנושא לפי אותיות; כל טעות מורידה 'חיים' עד שמצליחים או נגמר.", ex: "בנושא חלל: מנחשים את המילה 'אסטרונאוט', וכל טעות גוררת למידה של עובדה מעניינת על החלל." },
+            { title: "מאפיה (העיירה)", tags: ["bonding", "thinking", "discussion"], desc: "משחק תפקידים סודי. מנהלים מחזורי 'יום ולילה' של דיון כדי לגלות את הרעים.", ex: "בבריאות: ה'רוצח' הוא וירוס סודי, ו'השוטר' הוא מערכת החיסון שצריכה להדיח אותו." },
+            { title: "פתקיות (מי אני?)", tags: ["bonding", "thinking"], desc: "פתק עם מושג/דמות מהנושא מודבק על המצח, ושואלים שאלות כן/לא כדי לגלות מה כתוב.", ex: "בנושא בעלי חיים: לילד מודבק 'אריה' על המצח, והוא שואל 'האם אני טורף?' 'האם אני חי בסוואנה?'." },
+            { title: "צוללות", tags: ["thinking", "teamwork"], desc: "קבוצות מסתירות 'מטרות' בלוח גריד, ומנסות לנחש איפה מטרות היריב.", ex: "הקבוצה חייבת לפתור חידה ביחד רק כדי לקבל את הזכות להכריז קואורדינטה ולירות." },
+            { title: "21 שאלות", tags: ["thinking"], desc: "אחד חושב על מושג מהנושא, והקבוצה שואלת עד 21 שאלות כן/לא כדי לגלות.", ex: "בגיאוגרפיה: חושבים על מדינה, ושואלים 'האם היא באירופה?' או 'יש בה הרים?' כדי לגלות שזו שוויץ." },
+            { title: "חבילה עוברת", tags: ["bonding"], desc: "מעבירים חבילה עם כרטיסי שאלה/משימה; כשעוצרים מי שמחזיק שולף ומבצע.", ex: "בהיכרות: כשהמוזיקה עוצרת, המשתתף פותח עטיפה שמסתירה משימה כגון 'ספר על תחביב מיוחד שלך'." },
+            { title: "אוזניות וקריאת שפתיים", tags: ["bonding", "teamwork"], desc: "אחד עם רעש באוזניות צריך לנחש מושג/משפט מהנושא לפי קריאת שפתיים בלבד.", ex: "בנושא תקשורת: ממחיש את הקושי להבין מישהו כשיש 'רעשי רקע' (הפרעות בתקשורת)." },
+            { title: "טלפון שבור", tags: ["bonding"], desc: "מתחילים במשפט/עובדה מהנושא, מעבירים בלחישה לאורך הקבוצה, ובסוף בודקים מה יצא.", ex: "בדיון על שמועות: מעבירים משפט שמשתבש בדרך, ודנים על איך רכילות יוצאת מכלל שליטה." },
+            { title: "פאזל", tags: ["teamwork", "thinking"], desc: "מחלקים תמונה/טקסט מהנושא לחלקים, מרכיבים יחד, ואז עונים שאלה/מסכמים מסר.", ex: "בחברות: מרכיבים יחד תמונה של חברים, ועל גב הפאזל מסתתרת שאלת דיון על שיתוף פעולה." },
+            { title: "פרה עיוורת", tags: ["movement", "teamwork"], desc: "משתתף עם כיסוי עיניים מבצע מסלול/איסוף חפצים מהנושא לפי הוראות הקבוצה.", ex: "בבניית אמון: החניך בעיניים קשורות חייב לסמוך לחלוטין על ההוראות של בן הזוג שלו כדי לצלוח מכשולים." },
+            { title: "חפש את המטמון", tags: ["movement", "teamwork", "thinking"], desc: "רמזים ותחנות שכולן קשורות לנושא; בכל תחנה פותרים שאלה/משימה כדי לקבל את הרמז הבא.", ex: "בנושא מורשת: התחנות פזורות בשטח, ובכל תחנה מקבלים פיסת מידע, עד שמרכיבים את הסיפור המלא." },
+            { title: "חידון בארבע פינות", tags: ["movement", "discussion"], desc: "מציגים שאלה מהנושא עם 4 תשובות אפשריות (כל פינה תשובה), בוחרים פינה והולכים אליה.", ex: "בדילמות מוסריות: 'מה תעשה אם מצאת ארנק?', וכל פינה בחדר מייצגת תגובה אפשרית." },
+            { title: "Kahoot", tags: ["thinking"], desc: "חידון דיגיטלי אינטראקטיבי עם שאלות מהנושא וניקוד מהיר לפי תשובה וזמן.", ex: "בחזרה למבחן בזהירות בדרכים: מציגים תמרורים על המסך וכולם מצביעים מהר בסלולרי." },
+            { title: "טריוויה בקבוצות", tags: ["thinking", "teamwork"], desc: "קבוצות מתחרות ועונות על סטים של שאלות עם ניקוד מצטבר ומעבר בין סבבים.", ex: "בידיעת הארץ: הקבוצות דנות בשקט בחידות על נחלים, מה שמעודד הקשבה ותכנון אסטרטגי ולא רק צעקת תשובות." },
+            { title: "תו השעה", tags: ["bonding", "thinking"], desc: "משמיעים קטע קצר משירים שנבחרו לפי הנושא; מי שמזהה מקבל שאלה/משימה.", ex: "בנושא שלום: משמיעים פתיח של שיר רלוונטי, ומי שמזהה מתבקש להסביר שורה משמעותית מתוך השיר." },
+            { title: "הרמז (Clue)", tags: ["thinking", "teamwork"], desc: "פתרון תעלומה: מגלים מי/מה, איפה, ו-עם מה/איך בעזרת רמזים והסקה.", ex: "בבטיחות: מי? 'הילד', איפה? 'במטבח', עם מה? 'קומקום רותח'. אוספים רמזים עד שמרכיבים תרחיש." },
+            { title: "רולטה", tags: ["thinking"], desc: "משחק שבו כדור נופל על מספר/צבע. התוצאה קובעת את רמת הקושי של השאלה הבאה.", ex: "בחזרה על חומר: צבע אדום שווה שאלת 'נכון/לא נכון' קלה, וצבע שחור שווה שאלת מחשבה פתוחה וקשה." },
+            { title: "מרוץ שליחים", tags: ["movement", "teamwork"], desc: "תחנות עם משימות קצרות מהנושא; כל משתתף מבצע משימה ומעביר 'שליח' לבא אחריו.", ex: "בעבודת צוות: המשימה בתחנה 1 היא לפוצץ בלון יחד, בתחנה 2 הרכבת פאזל - מבינים שרק כולם ביחד מנצחים." },
+            { title: "חרטטוני", tags: ["bonding", "thinking"], desc: "המנחה שואל שאלה, וכולם צריכים לזרוק במהירות תשובות שגויות אך מאותה קטגוריה.", ex: "לקטגוריית 'פירות', צועקים שמות ירקות. מי שאומר פרי אמיתי (או שותק) - נפסל." },
+            { title: "PASSWORD", tags: ["bonding", "thinking"], desc: "תחרות ניחוש מילים: מותר לתת רמז של מילה אחת בלבד בכל תור כדי שינחשו את מילת היעד.", ex: "ליעד 'שגרה': קבוצה א' רומזת 'בוקר'. לא ניחשו? תור קבוצה ב' שמוסיפה רמז 'סדר'. הראשונה שמנחשת זוכה." },
+            { title: "חדר בריחה", tags: ["movement", "teamwork", "thinking"], desc: "רצף חידות ומשימות מהנושא; כל פתרון נותן קוד/מפתח שמוביל לשלב הבא עד היציאה.", ex: "בנושא מחזור: מגלים ש'פצצת זיהום' תופעל תוך 60 דקות, וחייבים לפתור חידות סביבה כדי לנטרלה." },
+            { title: "דיבייט", tags: ["discussion"], desc: "שני צדדים מקבלים טענות מנוגדות מתוך הנושא ומציגים אותן בתורות, עם סיכום קצר בסוף.", ex: "בתלבושת אחידה: קבוצה אחת חייבת להגן בלהט על היתרונות שלה, והשנייה על החסרונות - גם אם הם אישית חושבים אחרת." },
+            { title: "סימולציה", tags: ["discussion", "creative"], desc: "מדמים מצב מהחיים שקשור לנושא (תפקידים, כללים, תרחיש) ומתרגלים אותו כמשחק.", ex: "בנושא חרם חברתי: מדמים כיתה, מחלקים תפקידים (מוחרם, מקובל, צופה מהצד), ומשחקים כדי לראות איך פותרים." },
+            { title: "חפש את הטעות", tags: ["thinking"], desc: "מציגים תמונה/סיפור/רשימה מהנושא עם טעויות, והקבוצה מאתרת ומתקנת.", ex: "בבטיחות ברשת: מציגים צילום של פרופיל פיקטיבי, והחניכים מאתרים טעויות אבטחה." },
+            { title: "דומינו", tags: ["thinking"], desc: "מחברים אבני דומינו (לא עם מספרים) לפי התאמה מהנושא (תמונה-מושג, סיבה-תוצאה).", ex: "בנושא תזונה: מחברים אבן שכתוב עליה 'תפוח' לאבן של 'ויטמינים', ואבן של 'שוקולד' לאבן של 'סוכר'." },
+            { title: "הכרישים", tags: ["discussion", "creative"], desc: "מציגים רעיון או פתרון מול צוות 'שופטים' ששואלים שאלות קשות (כמו בתוכנית הטלוויזיה).", ex: "למכור יוזמה חברתית חדשה, והשופטים קובעים את מי כדאי לממן וקוטלים הצעות חלשות." },
+            { title: "ציר זמן", tags: ["thinking", "teamwork"], desc: "מסדרים אירועים/שלבים מהנושא לפי סדר נכון, ואז מסבירים בקצרה כל שלב.", ex: "בנושא הקמת המדינה: מקבלים כרטיסיות עם אירועים, ויש לסדר אותם כרונולוגית על חבל." },
+            { title: "Jeopardy", tags: ["thinking"], desc: "משחק לוח של קטגוריות ונקודות: בוחרים קטגוריה, מקבלים 'תשובה' מהנושא, ועונים בצורת שאלה.", ex: "'הרגש שמרגישים כשמשהו מפחיד אותנו' -> החניך עונה: 'מה זה פחד?'" },
+            { title: "שישה כובעי מחשבה", tags: ["discussion"], desc: "בחינת נושא מזוויות שונות (שיטת דה-בונו), כל 'כובע' מחייב צורת חשיבה ספציפית.", ex: "בדיון על סמארטפונים: מי שחובש כובע צהוב ידבר רק על היתרונות, וכובע שחור רק על הסכנות." },
+            { title: "גלרייה", tags: ["discussion", "movement"], desc: "מפזרים על הקירות עובדות/תמונות מהנושא, מסתובבים בין תחנות ומבצעים משימה אישית.", ex: "דמויות השראה: תולים ציטוטים ותמונות של מנהיגים, והמשתתפים כותבים רשמים בפתק כמו במוזיאון." },
+            { title: "גן נעול", tags: ["creative", "discussion"], desc: "כל משתתף או קבוצה מציירים משהו שמסכימים עליו, ואז דנים על הבחירות של כל אחד.", ex: "ערכי הקבוצה: כולם מציירים 'גן'. בדיון שואלים: מי צייר גדר (הגנה)? מי פרחים (צמיחה)?" },
+            { title: "אקווריום", tags: ["discussion"], desc: "חלוקת הקבוצה: מעגל פנימי שמנהל דיון פעיל, ומעגל חיצוני שרק צופה, מקשיב ורושם הערות.", ex: "כל כמה דקות מתחלפים בתפקידים, כך שמי שהקשיב בחוץ נכנס פנימה ומקבל זכות דיבור." },
+            { title: "המצאת יצירה", tags: ["creative", "teamwork"], desc: "יוצרים ריקוד, הצגה או שיר קצר שמעביר מסר מהנושא, ואז מציגים אותו לקבוצה.", ex: "בזהירות בדרכים: המשתתפים צריכים לחבר פזמון קצר וקליט (ג'ינגל פרסומי) שמעודד חבישת קסדה." },
+            { title: "חם קר משימות", tags: ["movement", "bonding"], desc: "אחד יוצא; הקבוצה בוחרת משימה שעליו לבצע, וכשהוא חוזר מכוונים אותו בצעקות 'חם/קר'.", ex: "בעידוד הסביבה: ממחיש כמה קל יותר לפעול כשהסביבה צועקת 'חם' (מעודדת) מאשר כשהיא שותקת." },
+            { title: "סולמות ונחשים", tags: ["thinking", "movement"], desc: "משחק לוח: כל משבצת מפעילה שאלה/משימה מהנושא; הצלחות מעלות בסולם ונכשלים יורדים בנחש.", ex: "בהרגלים בריאים: הגעת למשבצת 'אכלת תפוח' - עולים בסולם. משבצת 'הלכת לישון מאוחר' - יורדים בנחש." },
+            { title: "בעד ונגד", tags: ["discussion"], desc: "לכל משתתף שני שלטים 'בעד/נגד'; המדריך מקריא היגד מהנושא, כולם מרימים שלט, ואז מסבירים.", ex: "בטכנולוגיה: המנחה מקריא 'צריך להכניס AI לבית הספר', וכולם חייבים להרים מיד שלט ולנמק." },
+            { title: "גלגל המזל", tags: ["thinking"], desc: "מסובבים גלגל גדול המחולק לפלחים. על כל פלח כתובה קטגוריה, נושא או סוג משימה.", ex: "במיומנויות: הגלגל נעצר על 'סיטואציה מהסופר'. הקבוצה מקבלת תרחיש על עודף שגוי וצריכה להציג תגובה." },
+            { title: "דיון חופשי", tags: ["discussion"], desc: "מעלים שאלה מרכזית מהנושא ומנהלים שיחה פתוחה לפי כללי תורות דיבור והקשבה.", ex: "בעצמאות: שואלים 'מאיזה גיל צריך לתת לילד טלפון נייד?' ופותחים מעגל שיח פתוח בו כל אחד מביע דעה." },
+            { title: "הוצאת קטע", tags: ["discussion"], desc: "קוראים קטע קצר מהנושא, וכל אחד בוחר משפט שמתחבר אליו/מרגיז אותו ומשתף למה.", ex: "בטקסט על חברות: כל חניך בוחר מילה אחת מהטקסט שממש 'תפסה' אותו, ומסביר למה התחבר דווקא אליה." },
+            { title: "הצגה", tags: ["creative", "discussion"], desc: "המדריך או משתתפים מתנדבים מציגים סיטואציה מהנושא, ואז הקבוצה עונה שאלות ומנתחת.", ex: "צוות ההדרכה מציג מריבה מוגזמת על שטות, ועוצר באמצע כדי לשאול 'איך לדעתכם צריך לפתור את זה עכשיו?'." },
+            { title: "בניית הצגות בקבוצות", tags: ["creative", "teamwork"], desc: "קבוצות מקבלות כרטיס סיטואציה, בונות סצנה קצרה ומציגות, ואז משווים פתרונות/מסרים.", ex: "בהתמודדות עם כישלון: הקבוצה ממחיזה מקרה של תלמיד שנכשל, ומציגה דרכי תגובה שונות של ההורים." },
+            { title: "חידון סולם", tags: ["thinking", "teamwork"], desc: "שתי קבוצות עונות על חידות/שאלות מהנושא; כל תשובה נכונה מעלה שלב עד שמגיעים לראש.", ex: "במנהיגות: מציירים סולם שראשו 'מנהיג דגול'. תשובה שמפגינה אחריות מעלה את הקבוצה שלב." },
+            { title: "מגדל בבל (פירמידה)", tags: ["discussion", "teamwork"], desc: "אוספים רעיונות מהנושא ומסדרים בפירמידה: בסיס = הכי חשוב/בסיסי, למעלה = פחות חשוב.", ex: "בתכונות מנהיג: מתוך 10 תכונות, דנים איזו תכונה שמים בשפיץ הפירמידה (הכי חשובה) ואיזו בתחתית." },
+            { title: "מד חום", tags: ["movement", "discussion"], desc: "מציירים סקאלה (0–100), מקריאים היגדים מהנושא, וכל משתתף ממקם את עצמו פיזית ומסביר.", ex: "'צריך לבטל את שעת אפס'. המשתתפים נעמדים פיזית על הקו בין 0 (ממש לא מסכים) ל-100 (לגמרי מסכים)." },
+            { title: "מכירה פומבית", tags: ["discussion", "teamwork"], desc: "מחלקים 'תקציב' וירטואלי מוגבל, והקבוצות מתחרות בהצעות מחיר (מכרז) על ערכים מהנושא.", ex: "יש לכם 100 ₪. כמה תסכימו לשלם כדי 'לקנות' את הערך 'חברות'? ובכמה תקנו 'הצלחה'? מסכמים למה." },
+            { title: "אתגר הבוס", tags: ["thinking", "teamwork"], desc: "הקבוצה משתפת פעולה נגד 'בוס' וירטואלי עם מד חיים. תשובות נכונות פוגעות בו.", ex: "הבוס הוא ציור של 'מפלצת הפחד'. כל משתתף שמשתף כלי התמודדות מנחית מכה שמורידה לה 20 חיים." },
+            { title: "ג'נגה משימות", tags: ["thinking", "movement", "bonding"], desc: "משחק ג'נגה קלאסי, אך על כל לבנה מודבקת שאלה. המשתתף ששולף חייב לענות לפני ההנחה.", ex: "בחברות: שולפים לבנה 'ריב'. המשתתף חייב לשתף דרך טובה להשלים עם חבר לפני שיניח את הלבנה." },
+            { title: "דיאגרמת ון אנושית", tags: ["discussion", "movement"], desc: "יוצרים מעגלים חופפים על הרצפה. כל מעגל מייצג עמדה, ונעמדים בתוכם.", ex: "מעגל ימין 'אוהב פירות', שמאל 'ירקות'. מי שאוהב גם וגם - נעמד בשטח החופף שבאמצע." },
+            { title: "מי יוצא דופן?", tags: ["thinking"], desc: "מציגים רביעיית מושגים הקשורים לנושא שאחד אינו שייך. מסבירים למה.", ex: "'שמש, רוח, מים, פחם'. פחם חריג כי הוא מקור אנרגיה מתכלה, בניגוד לאחרים." },
+            { title: "סקר הקהל", tags: ["thinking", "teamwork"], desc: "קבוצות מתחרות בניחוש התשובות הנפוצות ביותר לשאלת סקר בנושא.", ex: "'שאלנו 100 אנשים: מה התירוץ הנפוץ לאיחור?'. מנחשים את מקום 1 לנקודות מרביות." },
+            { title: "המחיר הנכון", tags: ["thinking"], desc: "המשתתפים מתבקשים להעריך נתון מספרי, מחיר או שנה הקשורים לנושא.", ex: "'כמה אחוז מכלל המים בעולם הם מים מתוקים?'. מי שמהמר הכי קרוב מנצח." },
+            { title: "קיר הגורלות", tags: ["thinking", "movement"], desc: "לוח עם דלתות מסתירות פרסים או 'פצצות'. זוכים בפתיחה דרך משימה.", ex: "ענו נכון, ונציג פותח את דלת 7 ומוצא 'בונוס: נטיעת עץ' או 'קנס זיהום'." },
+            { title: "הרוח נושבת", tags: ["movement", "bonding"], desc: "מי שבמרכז מכריז מאפיין משותף, וכל מי שהמשפט חל עליו קם ומחליף מקום.", ex: "'הרוח נושבת על כל מי שעזר פעם לחבר בצרה'. מבינים פיזית שאנחנו קבוצה תורמת." },
+            { title: "ים יבשה", tags: ["movement", "thinking"], desc: "המנחה מקריא מושגים, והמשתתפים קופצים לצד שמתאים לקטגוריה.", ex: "'ים'=פחמימה, 'יבשה'=חלבון. המנחה צועק 'ביצה קשה!' וכולם מזנקים במהירות ליבשה." }
+        ];
+
+        // 2. CONFIGURATION
+        const labelConfig = {
+            'movement': { text: '🏃‍♂️ תנועה', emoji: '🏃‍♂️', classes: 'bg-brand-green/10 text-brand-green border-brand-green/20 dark:bg-brand-green/20', color: 'brand-green' },
+            'bonding': { text: '🧊 גיבוש', emoji: '🧊', classes: 'bg-brand-orange/10 text-brand-orange border-brand-orange/20 dark:bg-brand-orange/20', color: 'brand-orange' },
+            'thinking': { text: '🧠 חשיבה', emoji: '🧠', classes: 'bg-brand-blue/10 text-brand-blue border-brand-blue/20 dark:bg-brand-blue/20', color: 'brand-blue' },
+            'discussion': { text: '🗣️ שיח', emoji: '🗣️', classes: 'bg-brand-purple/10 text-brand-purple border-brand-purple/20 dark:bg-brand-purple/20', color: 'brand-purple' },
+            'teamwork': { text: '🤝 צוות', emoji: '🤝', classes: 'bg-brand-teal/10 text-brand-teal border-brand-teal/20 dark:bg-brand-teal/20', color: 'brand-teal' },
+            'creative': { text: '🎨 יצירה', emoji: '🎨', classes: 'bg-brand-rose/10 text-brand-rose border-brand-rose/20 dark:bg-brand-rose/20', color: 'brand-rose' }
+        };
+
+        // 3. CORE LOGIC
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- A. Render Cards ---
+            const gamesGrid = document.getElementById('gamesGrid');
+            
+            function generateCardHTML(item) {
+                const primaryTag = item.tags[0];
+                const conf = labelConfig[primaryTag];
+                const colorCls = conf.color;
+                
+                const badgesHTML = item.tags.map(t => {
+                    const lc = labelConfig[t];
+                    return `<span class="text-xs px-2.5 py-1 rounded-md border font-medium ${lc.classes}">${lc.text}</span>`;
+                }).join('');
+
+                return `
+                <div class="game-card relative bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-md border-x border-b border-slate-100 dark:border-slate-700 border-t-4 border-t-${colorCls} p-6 flex flex-col h-full group transition-colors" data-tags="${item.tags.join(',')}">
+                    <div class="absolute top-4 left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button class="ai-breakdown-btn p-1.5 text-slate-400 hover:text-brand-purple bg-slate-50 dark:bg-slate-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 rounded-lg transition-colors cursor-pointer" title="פרק מתודה לרכיבים עם AI">
+                            <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        </button>
+                        <button class="share-btn p-1.5 text-slate-400 hover:text-brand-blue bg-slate-50 dark:bg-slate-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors cursor-pointer" title="שתף מתודה">
+                            <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-5.368m0 5.368l5.662 3.397m-5.662-3.397l5.662-3.397m-.002-1.002a3 3 0 11-5.662-3.397m5.662 3.397l-5.662-3.397M17 19a3 3 0 11-6 0 3 3 0 016 0zm0-14a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </button>
+                        <button class="add-btn p-1.5 text-slate-400 hover:text-brand-rose bg-slate-50 dark:bg-slate-700 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-lg transition-colors cursor-pointer" title="הוסף לפעילות שלי">
+                            <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-start gap-3 mb-2 pl-24">
+                        <span class="text-3xl leading-none shrink-0 mt-0.5">${conf.emoji}</span>
+                        <h3 class="card-title text-xl font-bold text-${colorCls} leading-tight">${item.title}</h3>
+                    </div>
+                    
+                    <p class="card-desc text-slate-600 dark:text-slate-300 flex-grow text-sm leading-relaxed mb-3">${item.desc}</p>
+                    <div class="card-example mt-auto p-3 bg-slate-50 dark:bg-slate-700/50 border-r-4 border-${colorCls} rounded-l-lg text-sm text-slate-600 dark:text-slate-300">
+                        <span class="font-bold text-${colorCls} block mb-1 text-xs uppercase tracking-wide">לדוגמה מהשטח:</span>
+                        ${item.ex}
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-slate-50 dark:border-slate-700 badges-container">
+                        ${badgesHTML}
+                    </div>
+                </div>`;
+            }
+
+            gamesGrid.innerHTML = methodsData.map(m => generateCardHTML(m)).join('');
+            const cards = document.querySelectorAll('.game-card');
+
+            // --- B. Dark Mode ---
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const themeIconSun = document.getElementById('themeIconSun');
+            const themeIconMoon = document.getElementById('themeIconMoon');
+            
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                themeIconMoon.classList.add('hidden');
+                themeIconSun.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.theme = 'dark';
+                    themeIconMoon.classList.add('hidden');
+                    themeIconSun.classList.remove('hidden');
+                } else {
+                    localStorage.theme = 'light';
+                    themeIconSun.classList.add('hidden');
+                    themeIconMoon.classList.remove('hidden');
+                }
+            });
+
+            // --- C. Toast System ---
+            function showToast(message, type = 'success') {
+                const toast = document.createElement('div');
+                const bgColor = type === 'success' ? 'bg-brand-green' : (type === 'info' ? 'bg-slate-700' : 'bg-brand-blue');
+                toast.className = `px-5 py-2.5 rounded-full shadow-xl text-white font-medium flex items-center gap-2 transform transition-all translate-y-10 opacity-0 ${bgColor}`;
+                
+                const icon = type === 'success' 
+                    ? `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`
+                    : `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+                
+                toast.innerHTML = `${icon} ${message}`;
+                document.getElementById('toastContainer').appendChild(toast);
+                
+                requestAnimationFrame(() => {
+                    toast.classList.remove('translate-y-10', 'opacity-0');
+                    toast.classList.add('translate-y-0', 'opacity-100');
+                });
+
+                setTimeout(() => {
+                    toast.classList.remove('translate-y-0', 'opacity-100');
+                    toast.classList.add('translate-y-10', 'opacity-0');
+                    setTimeout(() => toast.remove(), 300);
+                }, 2500);
+            }
+
+            // --- D. Filtering System ---
+            const searchInput = document.getElementById('searchInput');
+            const clearSearchBtn = document.getElementById('clearSearchBtn');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const noResults = document.getElementById('noResults');
+            const filterSummary = document.getElementById('filterSummary');
+            const filterLogicText = document.getElementById('filterLogicText');
+            
+            let activeFilters = new Set();
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.dataset.filter;
+                    const colorPrefix = btn.dataset.color;
+                    
+                    if (activeFilters.has(filter)) {
+                        activeFilters.delete(filter);
+                        btn.classList.remove('active', `bg-${colorPrefix}`, 'text-white', 'shadow-md', 'scale-95');
+                        btn.classList.add(`bg-${colorPrefix}/10`, `text-${colorPrefix}`);
+                    } else {
+                        activeFilters.add(filter);
+                        btn.classList.remove(`bg-${colorPrefix}/10`, `text-${colorPrefix}`);
+                        btn.classList.add('active', `bg-${colorPrefix}`, 'text-white', 'shadow-md', 'scale-95');
+                    }
+                    applyFilters();
+                });
+            });
+
+            searchInput.addEventListener('input', applyFilters);
+
+            if (clearSearchBtn) {
+                clearSearchBtn.addEventListener('click', () => {
+                    searchInput.value = '';
+                    filterBtns.forEach(btn => {
+                        if (btn.classList.contains('active')) btn.click();
+                    });
+                    applyFilters();
+                });
+            }
+
+            function applyFilters() {
+                let anyVisible = false;
+                const searchTerm = searchInput.value.toLowerCase();
+                
+                cards.forEach(card => {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const desc = card.querySelector('.card-desc').textContent.toLowerCase();
+                    const example = card.querySelector('.card-example').textContent.toLowerCase();
+                    const cardTags = card.dataset.tags.split(',').map(t => t.trim());
+                    
+                    const matchSearch = title.includes(searchTerm) || desc.includes(searchTerm) || example.includes(searchTerm);
+                    
+                    let matchTags = true;
+                    if (activeFilters.size > 0) {
+                        const activeArr = Array.from(activeFilters);
+                        matchTags = activeArr.every(f => cardTags.includes(f));
+                    }
+
+                    if (matchSearch && matchTags) {
+                        card.style.display = 'flex';
+                        anyVisible = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                noResults.classList.toggle('hidden', anyVisible || (searchTerm === '' && activeFilters.size === 0));
+                
+                if (activeFilters.size > 0) {
+                    filterSummary.classList.remove('hidden');
+                    const activeNames = Array.from(activeFilters).map(f => labelConfig[f].text.replace(/[^א-ת\s]/g, '').trim());
+                    filterLogicText.textContent = activeNames.join(' וגם ');
+                } else {
+                    filterSummary.classList.add('hidden');
+                }
+            }
+
+            // --- E. Share & Session Cart & AI Breakdown Actions ---
+            let sessionItems = new Map(); 
+            const sessionFab = document.getElementById('sessionFab');
+            const sessionBadge = document.getElementById('sessionBadge');
+            const sessionModal = document.getElementById('sessionModal');
+            const closeSessionBtn = document.getElementById('closeSessionBtn');
+            const sessionList = document.getElementById('sessionList');
+            const emptySessionMsg = document.getElementById('emptySessionMsg');
+            const exportSessionBtn = document.getElementById('exportSessionBtn');
+
+            // AI specific bindings
+            const aiModal = document.getElementById('aiModal');
+            const closeAiBtn = document.getElementById('closeAiBtn');
+            const aiTopicInputArea = document.getElementById('aiTopicInputArea');
+            const aiTopicInput = document.getElementById('aiTopicInput');
+            const aiTopicSubmitBtn = document.getElementById('aiTopicSubmitBtn');
+            const aiResultArea = document.getElementById('aiResultArea');
+            const aiResultTitle = document.getElementById('aiResultTitle');
+            const aiLoading = document.getElementById('aiLoading');
+            const aiResultText = document.getElementById('aiResultText');
+            const aiFooterArea = document.getElementById('aiFooterArea');
+            const aiRegenerateBtn = document.getElementById('aiRegenerateBtn');
+            const topicBreakdownBtn = document.getElementById('topicBreakdownBtn');
+
+            let currentAiQuery = '';
+            let currentAiType = '';
+
+            document.addEventListener('click', (e) => {
+                const shareBtn = e.target.closest('.share-btn');
+                const addBtn = e.target.closest('.add-btn');
+                const removeSessionBtn = e.target.closest('.remove-session-btn');
+                const aiBtn = e.target.closest('.ai-breakdown-btn');
+                
+                if (shareBtn) handleShare(shareBtn.closest('.game-card'));
+                if (addBtn) toggleSessionItem(addBtn.closest('.game-card'), addBtn);
+                if (removeSessionBtn) removeSessionItemByTitle(removeSessionBtn.dataset.title);
+                if (aiBtn) handleMethodBreakdown(aiBtn.closest('.game-card'));
+            });
+
+            function handleShare(card) {
+                const title = card.querySelector('.card-title').textContent.replace(/[^\u0590-\u05FF\s()?'"-]/g, '').trim(); 
+                const desc = card.querySelector('.card-desc').textContent.trim();
+                let exampleText = card.querySelector('.card-example').textContent.replace('לדוגמה מהשטח:', '').trim();
+                
+                const textToCopy = `*${title}*\n${desc}\n\n💡 לדוגמה: ${exampleText}`;
+                
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showToast('המתודה הועתקה. אפשר להדביק בוואטסאפ!', 'success');
+                }).catch(err => {
+                    console.error('Copy failed', err);
+                    showToast('שגיאה בהעתקה', 'info');
+                });
+            }
+
+            function toggleSessionItem(card, btnElement) {
+                const title = card.querySelector('.card-title').textContent.replace(/[^\u0590-\u05FF\s()?'"-]/g, '').trim();
+
+                if (sessionItems.has(title)) {
+                    sessionItems.delete(title);
+                    btnElement.classList.remove('text-brand-rose', 'bg-rose-50', 'dark:bg-slate-700', 'ring-2', 'ring-brand-rose');
+                    btnElement.classList.add('text-slate-400');
+                    showToast('הוסר מסל הפעילות', 'info');
+                } else {
+                    sessionItems.set(title, card);
+                    btnElement.classList.remove('text-slate-400');
+                    btnElement.classList.add('text-brand-rose', 'bg-rose-50', 'dark:bg-slate-700', 'ring-2', 'ring-brand-rose');
+                    showToast('המתודה נוספה לפעילות!', 'success');
+                }
+                updateSessionBadge();
+            }
+
+            function removeSessionItemByTitle(title) {
+                if(sessionItems.has(title)) {
+                    sessionItems.delete(title);
+                    cards.forEach(card => {
+                        const t = card.querySelector('.card-title').textContent.replace(/[^\u0590-\u05FF\s()?'"-]/g, '').trim();
+                        if (t === title) {
+                            const btnElement = card.querySelector('.add-btn');
+                            if(btnElement) {
+                                btnElement.classList.remove('text-brand-rose', 'bg-rose-50', 'dark:bg-slate-700', 'ring-2', 'ring-brand-rose');
+                                btnElement.classList.add('text-slate-400');
+                            }
+                        }
+                    });
+                    renderSessionList();
+                    updateSessionBadge();
+                }
+            }
+
+            function updateSessionBadge() {
+                const count = sessionItems.size;
+                sessionBadge.textContent = count;
+                if (count > 0) {
+                    sessionBadge.classList.remove('scale-0');
+                    sessionBadge.classList.add('scale-100');
+                } else {
+                    sessionBadge.classList.add('scale-0');
+                    sessionBadge.classList.remove('scale-100');
+                }
+            }
+
+            sessionFab.addEventListener('click', () => {
+                renderSessionList();
+                sessionModal.classList.remove('pointer-events-none', 'opacity-0');
+                sessionModal.firstElementChild.classList.remove('scale-95');
+                sessionModal.firstElementChild.classList.add('scale-100');
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeSessionBtn.addEventListener('click', closeSessionDrawer);
+            sessionModal.addEventListener('click', (e) => {
+                if (e.target === sessionModal) closeSessionDrawer();
+            });
+
+            function closeSessionDrawer() {
+                sessionModal.classList.add('pointer-events-none', 'opacity-0');
+                sessionModal.firstElementChild.classList.add('scale-95');
+                sessionModal.firstElementChild.classList.remove('scale-100');
+                document.body.style.overflow = '';
+            }
+
+            function renderSessionList() {
+                sessionList.innerHTML = '';
+                if (sessionItems.size === 0) {
+                    emptySessionMsg.classList.remove('hidden');
+                    exportSessionBtn.disabled = true;
+                    exportSessionBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    emptySessionMsg.classList.add('hidden');
+                    exportSessionBtn.disabled = false;
+                    exportSessionBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    
+                    let counter = 1;
+                    sessionItems.forEach((card, title) => {
+                        const li = document.createElement('li');
+                        li.className = 'bg-white dark:bg-slate-800 p-3 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex justify-between items-center';
+                        li.innerHTML = `
+                            <div class="flex items-center gap-3">
+                                <span class="bg-brand-blue/10 text-brand-blue font-bold w-6 h-6 rounded-full flex items-center justify-center text-sm">${counter}</span>
+                                <span class="font-bold text-slate-700 dark:text-slate-200">${title}</span>
+                            </div>
+                            <button class="remove-session-btn text-slate-400 hover:text-red-500 p-1 rounded-md transition-colors cursor-pointer" data-title="${title}">
+                                <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            </button>
+                        `;
+                        sessionList.appendChild(li);
+                        counter++;
+                    });
+                }
+            }
+
+            exportSessionBtn.addEventListener('click', () => {
+                if (sessionItems.size === 0) return;
+                
+                let exportText = `📋 *הפעילות שלי:*\n\n`;
+                let counter = 1;
+                
+                sessionItems.forEach((card, title) => {
+                    const desc = card.querySelector('.card-desc').textContent.trim();
+                    exportText += `${counter}. *${title}*\n${desc}\n\n`;
+                    counter++;
+                });
+
+                navigator.clipboard.writeText(exportText).then(() => {
+                    showToast('מערך הפעילות הועתק במלואו!', 'success');
+                    closeSessionDrawer();
+                }).catch(err => {
+                    showToast('שגיאה בהעתקה', 'info');
+                });
+            });
+
+            // --- F. Randomizer Logic ---
+            const randomBtn = document.getElementById('randomBtn');
+            const randomModal = document.getElementById('randomModal');
+            const closeRandomBtn = document.getElementById('closeModalBtn');
+            const rerollBtn = document.getElementById('rerollBtn');
+            const randomCardsContainer = document.getElementById('randomCardsContainer');
+
+            let slot1 = { element: null, locked: false, animateNext: true };
+            let slot2 = { element: null, locked: false, animateNext: true };
+
+            function getRandomCard(excludeCardElement, visibleCards) {
+                if (visibleCards.length === 0) return null;
+                if (visibleCards.length === 1 && excludeCardElement) return visibleCards[0];
+                
+                let attempts = 0;
+                let randomCard;
+                do {
+                    const idx = Math.floor(Math.random() * visibleCards.length);
+                    randomCard = visibleCards[idx];
+                    attempts++;
+                } while (excludeCardElement && randomCard === excludeCardElement && attempts < 10);
+                return randomCard;
+            }
+
+            function createCardWrapper(cardNode, slotIndex, animate) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'relative flex flex-col h-full';
+                if (animate) wrapper.classList.add('pop-in');
+                
+                const clonedCard = cardNode.cloneNode(true);
+                clonedCard.style.display = 'flex';
+                clonedCard.classList.remove('h-full');
+                clonedCard.classList.add('h-full', 'flex-1');
+                
+                const actions = clonedCard.querySelector('.absolute.top-4');
+                if(actions) actions.remove();
+
+                const isLocked = slotIndex === 1 ? slot1.locked : slot2.locked;
+                if (isLocked) {
+                    clonedCard.classList.add('ring-2', 'ring-brand-purple');
+                }
+
+                const lockBtn = document.createElement('button');
+                lockBtn.className = `absolute top-4 left-4 z-10 p-2.5 rounded-full shadow-md transition-all cursor-pointer ${isLocked ? 'bg-brand-purple text-white ring-2 ring-brand-purple ring-offset-2 dark:ring-offset-slate-900' : 'bg-white dark:bg-slate-700 text-slate-400 hover:text-brand-purple border border-slate-100 dark:border-slate-600'}`;
+                lockBtn.title = isLocked ? "שחרר קיבוע" : "קבע מתודה זו";
+                
+                lockBtn.innerHTML = isLocked 
+                    ? `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>`
+                    : `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>`;
+
+                lockBtn.addEventListener('click', () => {
+                    if (slotIndex === 1) slot1.locked = !slot1.locked;
+                    else slot2.locked = !slot2.locked;
+                    renderModalSlots(false); 
+                });
+
+                wrapper.appendChild(clonedCard);
+                wrapper.appendChild(lockBtn);
+                return wrapper;
+            }
+
+            function rollDice(animate = true) {
+                const visibleCards = Array.from(document.querySelectorAll('#gamesGrid .game-card')).filter(c => c.style.display !== 'none');
+                
+                if (visibleCards.length < 2) {
+                    alert("אין מספיק תוצאות כדי להגריל שילוב. נסו להוריד חלק מהפילטרים.");
+                    return;
+                }
+
+                if (!slot1.locked) {
+                    slot1.element = getRandomCard(slot2.locked ? slot2.element : null, visibleCards);
+                    slot1.animateNext = true;
+                } else {
+                    slot1.animateNext = false;
+                }
+
+                if (!slot2.locked) {
+                    slot2.element = getRandomCard(slot1.element, visibleCards);
+                    slot2.animateNext = true;
+                } else {
+                    slot2.animateNext = false;
+                }
+
+                renderModalSlots(animate);
+            }
+
+            function renderModalSlots(animate = true) {
+                randomCardsContainer.innerHTML = '';
+                if (slot1.element) randomCardsContainer.appendChild(createCardWrapper(slot1.element, 1, animate && slot1.animateNext));
+                if (slot2.element) randomCardsContainer.appendChild(createCardWrapper(slot2.element, 2, animate && slot2.animateNext));
+            }
+
+            function openRandomModal() {
+                slot1.locked = false;
+                slot2.locked = false;
+                rollDice(true);
+                randomModal.classList.remove('pointer-events-none', 'opacity-0');
+                randomModal.firstElementChild.classList.remove('scale-95');
+                randomModal.firstElementChild.classList.add('scale-100');
+                document.body.style.overflow = 'hidden'; 
+            }
+
+            function closeRandomModal() {
+                randomModal.classList.add('pointer-events-none', 'opacity-0');
+                randomModal.firstElementChild.classList.remove('scale-100');
+                randomModal.firstElementChild.classList.add('scale-95');
+                document.body.style.overflow = ''; 
+            }
+
+            randomBtn.addEventListener('click', openRandomModal);
+            closeRandomBtn.addEventListener('click', closeRandomModal);
+            rerollBtn.addEventListener('click', () => rollDice(true));
+            
+            randomModal.addEventListener('click', (e) => {
+                if (e.target === randomModal) closeRandomModal();
+            });
+
+            // --- G. AI Breakdown Logic ---
+            function openAiModal() {
+                aiModal.classList.remove('pointer-events-none', 'opacity-0');
+                aiModal.firstElementChild.classList.remove('scale-95');
+                aiModal.firstElementChild.classList.add('scale-100');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeAiModal() {
+                aiModal.classList.add('pointer-events-none', 'opacity-0');
+                aiModal.firstElementChild.classList.add('scale-95');
+                aiModal.firstElementChild.classList.remove('scale-100');
+                document.body.style.overflow = '';
+            }
+
+            closeAiBtn.addEventListener('click', closeAiModal);
+            aiModal.addEventListener('click', (e) => {
+                if (e.target === aiModal) closeAiModal();
+            });
+
+            // Top Button: Topic Breakdown
+            if(topicBreakdownBtn) {
+                topicBreakdownBtn.addEventListener('click', () => {
+                    openAiModal();
+                    aiTopicInputArea.classList.remove('hidden');
+                    aiResultArea.classList.add('hidden');
+                    aiFooterArea.classList.add('hidden');
+                    aiTopicInput.value = '';
+                    setTimeout(() => aiTopicInput.focus(), 300);
+                });
+            }
+
+            // User submits a topic to breakdown
+            if(aiTopicSubmitBtn) {
+                aiTopicSubmitBtn.addEventListener('click', () => {
+                    const topic = aiTopicInput.value.trim();
+                    if (!topic) return;
+                    currentAiQuery = topic;
+                    currentAiType = 'topic';
+                    
+                    aiTopicInputArea.classList.add('hidden');
+                    aiResultArea.classList.remove('hidden');
+                    aiResultTitle.textContent = `הרכיבים של: ${topic}`;
+                    
+                    fetchAiBreakdown(currentAiType, currentAiQuery);
+                });
+            }
+
+            // Card Button: Method Breakdown
+            function handleMethodBreakdown(card) {
+                const title = card.querySelector('.card-title').textContent.replace(/[^\u0590-\u05FF\s()?'"-]/g, '').trim();
+                
+                currentAiQuery = title;
+                currentAiType = 'method';
+                
+                openAiModal();
+                aiTopicInputArea.classList.add('hidden');
+                aiResultArea.classList.remove('hidden');
+                aiResultTitle.textContent = `המכניקה של: ${title}`;
+                
+                const methodData = methodsData.find(m => m.title === title);
+                if (methodData && methodData.components) {
+                    showAiResult(methodData.components);
+                } else {
+                    fetchAiBreakdown(currentAiType, currentAiQuery);
+                }
+            }
+
+            async function fetchAiBreakdown(type, query) {
+                aiResultText.innerHTML = '';
+                aiLoading.classList.remove('hidden');
+                aiFooterArea.classList.add('hidden');
+
+                try {
+                    const response = await fetch('/.netlify/functions/breakdown', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ type, query })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(data.error || 'אירעה שגיאה בתקשורת מול השרת');
+                    }
+                    
+                    showAiResult(data.result);
+                } catch (error) {
+                    console.error("AI Fetch error:", error);
+                    aiLoading.classList.add('hidden');
+                    aiResultText.innerHTML = `<span class="text-brand-rose font-bold">שגיאה:</span> לא הצלחנו לגשת ל-AI כרגע.`;
+                    aiFooterArea.classList.remove('hidden');
+                }
+            }
+
+            function showAiResult(text) {
+                aiLoading.classList.add('hidden');
+                aiResultText.innerHTML = text;
+                aiFooterArea.classList.remove('hidden');
+            }
+
+            if(aiRegenerateBtn) {
+                aiRegenerateBtn.addEventListener('click', () => {
+                    fetchAiBreakdown(currentAiType, currentAiQuery);
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>

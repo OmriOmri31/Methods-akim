@@ -163,8 +163,8 @@
     <!-- Bottom Banner: Suggest new content -->
     <div class="container mx-auto px-6 pb-16 max-w-5xl">
         <section class="bg-gradient-to-r from-brand-orange to-brand-rose rounded-3xl p-8 md:p-10 text-center text-white shadow-lg relative overflow-hidden transition-transform hover:scale-[1.01] duration-300">
-            <h2 class="text-2xl md:text-3xl font-bold mb-3 relative z-10">יש לכם מתודה פצצה? 🚀</h2>
-            <p class="mb-6 opacity-90 text-lg relative z-10">המאגר הזה נבנה על ידי המדריכים ובשביל המדריכים. נשמח לשמוע רעיונות חדשים!</p>
+            <h2 class="text-2xl md:text-3xl font-bold mb-3 relative z-10">יש לכם מתודה פצצה? 💣</h2>
+            <p class="mb-6 opacity-90 text-lg relative z-10">המאגר נבנה עבור מדריכי ההווה והעתיד, נשמח לרעיונות חדשים!</p>
             <a href="https://forms.gle/fuMYfQLB7kjCDd2G6" target="_blank" rel="noopener noreferrer" class="inline-block bg-white text-brand-orange font-bold py-3 px-8 rounded-full shadow hover:shadow-lg transform transition relative z-10">הצעת מתודה חדשה</a>
             <!-- Decor inside banner -->
             <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 rounded-full bg-white opacity-10 blur-xl pointer-events-none"></div>
@@ -375,7 +375,7 @@
 
     <!-- JS Logic: Data Generation & Interactivity -->
     <script>
-        // 1. DATA: ALL 63 METHODS WITH HIGH QUALITY PRE-DEFINED COMPONENTS
+        // 1. DATA: ALL 64 METHODS WITH HIGH QUALITY PRE-DEFINED COMPONENTS
         const methodsData = [
             { title: "מונופול", tags: ["thinking"], desc: "משחק לוח שבו מתקדמים בין משבצות, וכל עצירה מפעילה שאלה/משימה. המטרה לצבור הכי הרבה נקודות.", ex: "בנושא בטיחות בדרכים: הגעה למשבצת 'כלא' מחייבת לענות נכונה על 3 שאלות תמרורים כדי להשתחרר.", components: "1. לוח עם מסלול ומשבצות מוגדרות.\n2. התקדמות המבוססת על הטלת קוביות (אלמנט אקראי).\n3. הפעלת אירוע, שאלה או משימה בעצירה על משבצת.\n4. צבירת משאבים (כסף, נקודות או נכסים)." },
             { title: "אליאס (טאבו)", tags: ["bonding", "teamwork"], desc: "מסבירים לקבוצה מושג מהנושא במילים אחרות תחת זמן קצוב, מבלי להשתמש במילות שורש.", ex: "לגרום לקבוצה להגיד 'חופש גדול' מבלי להשתמש במילים האסורות: קיץ, בית ספר, יולי.", components: "1. כרטיסיות עם מילות יעד ורשימת 'מילים אסורות'.\n2. הגבלת זמן (שעון חול או טיימר).\n3. איסור שימוש בשורש המילה או בפנטומימה.\n4. דינמיקה של 'מסביר אחד, קבוצה שלמה מנחשת'." },
@@ -439,7 +439,9 @@
             { title: "המחיר הנכון", tags: ["thinking"], desc: "המשתתפים מתבקשים להעריך נתון מספרי, מחיר או שנה הקשורים לנושא.", ex: "'כמה אחוז מכלל המים בעולם הם מים מתוקים?'. מי שמהמר הכי קרוב מנצח.", components: "1. הצגת חידת הערכה המתבססת על נתון סטטיסטי מדויק, כסף או תאריך היסטורי.\n2. ביצוע אומדן (ניחוש מושכל) על ידי כל קבוצה או משתתף בנפרד.\n3. חוק הברזל: הניקוד הולך למי שקרוב ביותר לנתון האמיתי (ללא חריגה).\n4. חשיפה דרמטית שמטרתה לשבור מיתוסים ולעורר תדהמה והפנמת עובדות." },
             { title: "קיר הגורלות", tags: ["thinking", "movement"], desc: "לוח עם דלתות מסתירות פרסים או 'פצצות'. זוכים בפתיחה דרך משימה.", ex: "ענו נכון, ונציג פותח את דלת 7 ומוצא 'בונוס: נטיעת עץ' או 'קנס זיהום'.", components: "1. אלמנט מרכזי ויזואלי של לוח מחולק לתאים סגורים, דלתות או מעטפות ממוספרות.\n2. זכות הפתיחה (בחירת דלת) מותנית בהצלחה במענה על שאלות או משימות צוות.\n3. הפתעה מוחלטת: מאחורי התאים יכול להסתתר ניקוד פלוס, מינוס דרמטי או משימה נוספת.\n4. יצירת מערך שבו אסטרטגיה טובה משולבת תמיד עם ניהול סיכונים וחוסר ודאות." },
             { title: "הרוח נושבת", tags: ["movement", "bonding"], desc: "מי שבמרכז מכריז מאפיין משותף, וכל מי שהמשפט חל עליו קם ומחליף מקום.", ex: "'הרוח נושבת על כל מי שעזר פעם לחבר בצרה'. מבינים פיזית שאנחנו קבוצה תורמת.", components: "1. סידור מרחבי: מעגל כיסאות הכולל מקום אחד פחות ממספר המשתתפים.\n2. המשתתף במרכז תובע הצהרת הזדהות: 'הרוח נושבת על מי ש...'.\n3. אלמנט תנועתי ודינמי: חובת קימה והחלפת מקום לכל מי שהצהרה זו תקפה לגביו.\n4. כלי ליצירת הזדהות וגילוי מאפיינים נסתרים של חברי הקבוצה." },
-            { title: "ים יבשה", tags: ["movement", "thinking"], desc: "המנחה מקריא מושגים, והמשתתפים קופצים לצד שמתאים לקטגוריה.", ex: "'ים'=פחמימה, 'יבשה'=חלבון. המנחה צועק 'ביצה קשה!' וכולם מזנקים במהירות ליבשה.", components: "1. חלוקה ברורה ופיזית של החלל לשני אזורי קונספט (ים/יבשה, מותר/אסור, נכון/שגוי).\n2. הקראה רציפה, מהירה ומתעתעת של מושגים על ידי מנחה הפעילות.\n3. תגובה מוטורית אינסטינקטיבית לזיהוי שיוכו של המושג.\n4. מנגנון פסילה לטועים המאלץ שמירה על ריכוז שיא וערנות מנטלית-פיזית." }
+            { title: "ים יבשה", tags: ["movement", "thinking"], desc: "המנחה מקריא מושגים, והמשתתפים קופצים לצד שמתאים לקטגוריה.", ex: "'ים'=פחמימה, 'יבשה'=חלבון. המנחה צועק 'ביצה קשה!' וכולם מזנקים במהירות ליבשה.", components: "1. חלוקה ברורה ופיזית של החלל לשני אזורי קונספט (ים/יבשה, מותר/אסור, נכון/שגוי).\n2. הקראה רציפה, מהירה ומתעתעת של מושגים על ידי מנחה הפעילות.\n3. תגובה מוטורית אינסטינקטיבית לזיהוי שיוכו של המושג.\n4. מנגנון פסילה לטועים המאלץ שמירה על ריכוז שיא וערנות מנטלית-פיזית." },
+            { title: "סיימון זיכרון", tags: ["movement", "thinking"], desc: "משחק זיכרון מצטבר: בכל תור מוסיפים תנועה או משימה קצרה לרצף הקיים, ועל המשתתף הבא לחזור על כל הרצף מתחילתו.", ex: "בנושא אורח חיים בריא: הראשון עושה שכיבת סמיכה, השני שכיבת סמיכה וקפיצה למעלה... מי שמתבלבל נפסל או מקבל שאלת תוכן.", components: "1. יצירת רצף פעולות הולך וגדל (הצטברות).\n2. דרישה לזיכרון פעיל ושחזור מדויק של כל השלבים הקודמים.\n3. ביצוע פיזי, תנועתי או ווקאלי של המשימות.\n4. מנגנון אלמינציה (פסילה) או מתן קנס/משימה למי שטועה ברצף." },
+            { title: "סיימון משימות", tags: ["teamwork", "movement", "bonding"], desc: "תחרות בין קבוצות המקבלות רשימה ארוכה של משימות מגוונות, מצחיקות ומאתגרות, שלכל אחת ניקוד שונה. המטרה: לצבור מקסימום נקודות בזמן מוגבל.", ex: "בעבודת צוות: המשימות דורשות שיתוף פעולה, כמו לעבור בתוך חישוק בלי לעזוב ידיים (100 נק'), או להסתדר בשורה לפי אות שנייה של שם הסבתא (60 נק').", components: "1. רשימת משימות סגורה ומגוונת (פיזיות, חברתיות, יצירתיות).\n2. מנגנון תגמול: חלוקת ניקוד משתנה לכל משימה לפי רמת הקושי.\n3. מסגרת זמן קשיחה ומוגבלת המייצרת לחץ, תעדוף ותכנון אסטרטגי.\n4. עבודה קבוצתית המחייבת תקשורת וחלוקת תפקידים." }
         ];
 
         // 2. CONFIGURATION
@@ -480,7 +482,6 @@
                     return `<span class="text-xs px-2.5 py-1 rounded-md border font-medium ${lc.classes}">${lc.text}</span>`;
                 }).join('');
 
-                // Fixed the share button SVG: replaced with a clean outbound arrow and added shrink-0 to prevent squishing
                 return `
                 <div class="game-card relative bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-md border-x border-b border-slate-100 dark:border-slate-700 border-t-4 border-t-${colorCls} p-6 flex flex-col h-full group transition-colors" data-tags="${item.tags.join(',')}">
                     <div class="absolute top-4 left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -505,6 +506,7 @@
                         <span class="font-bold text-${colorCls} block mb-1 text-xs uppercase tracking-wide">לדוגמה מהשטח:</span>
                         ${item.ex}
                     </div>
+                    <span class="hidden card-components">${item.components || ''}</span>
                     <div class="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-slate-50 dark:border-slate-700 badges-container">
                         ${badgesHTML}
                     </div>
@@ -613,9 +615,10 @@
                     const title = card.querySelector('.card-title').textContent.toLowerCase();
                     const desc = card.querySelector('.card-desc').textContent.toLowerCase();
                     const example = card.querySelector('.card-example').textContent.toLowerCase();
+                    const componentsText = card.querySelector('.card-components')?.textContent.toLowerCase() || '';
                     const cardTags = card.dataset.tags.split(',').map(t => t.trim());
                     
-                    const matchSearch = title.includes(searchTerm) || desc.includes(searchTerm) || example.includes(searchTerm);
+                    const matchSearch = title.includes(searchTerm) || desc.includes(searchTerm) || example.includes(searchTerm) || componentsText.includes(searchTerm);
                     
                     let matchTags = true;
                     if (activeFilters.size > 0) {
@@ -821,14 +824,18 @@
                     let counter = 1;
                     sessionItems.forEach((data, title) => {
                         const cleanTitle = title.replace(/[^א-ת\s()?'"-]/g, '').trim();
+                        const descPreview = data.desc ? data.desc : '';
                         const li = document.createElement('li');
                         li.className = 'bg-white dark:bg-slate-800 p-3 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex justify-between items-center';
                         li.innerHTML = `
-                            <div class="flex items-center gap-3">
-                                <span class="bg-brand-blue/10 text-brand-blue font-bold w-6 h-6 rounded-full flex items-center justify-center text-sm shrink-0">${counter}</span>
-                                <span class="font-bold text-slate-700 dark:text-slate-200">${cleanTitle}</span>
+                            <div class="flex flex-col w-full overflow-hidden gap-1.5">
+                                <div class="flex items-center gap-3">
+                                    <span class="bg-brand-blue/10 text-brand-blue font-bold w-6 h-6 rounded-full flex items-center justify-center text-sm shrink-0">${counter}</span>
+                                    <span class="font-bold text-slate-700 dark:text-slate-200 truncate">${cleanTitle}</span>
+                                </div>
+                                ${descPreview ? `<div class="text-xs text-slate-500 dark:text-slate-400 pl-10 pr-9 line-clamp-2 leading-relaxed" title="${descPreview.replace(/"/g, '&quot;')}">${descPreview}</div>` : ''}
                             </div>
-                            <button class="remove-session-btn text-slate-400 hover:text-red-500 p-1 rounded-md transition-colors cursor-pointer shrink-0" data-title="${title}">
+                            <button class="remove-session-btn text-slate-400 hover:text-red-500 p-2 rounded-md transition-colors cursor-pointer shrink-0 ml-1" data-title="${title}">
                                 <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                             </button>
                         `;
@@ -846,7 +853,7 @@
                 
                 sessionItems.forEach((data, title) => {
                     const cleanTitle = title.replace(/[^א-ת\s()?'"-]/g, '').trim();
-                    const desc = data.desc ? data.desc : data;
+                    const desc = data.desc ? data.desc : '';
                     exportText += `${counter}. *${cleanTitle}*\n${desc}\n\n`;
                     counter++;
                 });

@@ -64,8 +64,8 @@
 
     <!-- Header Section -->
     <header class="bg-gradient-to-br from-brand-dark to-slate-700 text-white py-16 shadow-lg relative overflow-hidden transition-colors">
-        <!-- Logo - Right aligned for RTL (No white border, much larger size) -->
-        <div class="absolute top-4 right-4 md:top-6 md:right-6 z-30 transition-transform hover:scale-105 cursor-pointer">
+        <!-- Logo - Right aligned for RTL (Interactive scaling) -->
+        <div id="logoContainer" class="absolute top-4 right-4 md:top-6 md:right-6 z-50 transition-transform duration-300 origin-top-right cursor-pointer md:hover:scale-[1.3]">
             <img src="logo.png" alt="לוגו אקים כפר סבא" class="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover shadow-lg">
         </div>
 
@@ -1197,6 +1197,24 @@
                     });
                 });
             }
+
+            // --- Logo Interaction ---
+            const logoContainer = document.getElementById('logoContainer');
+            
+            logoContainer.addEventListener('click', (e) => {
+                // Only toggle sizing on mobile screens on click
+                if (window.innerWidth < 768) {
+                    e.stopPropagation(); // Prevent the document click listener from immediately hiding it
+                    logoContainer.classList.toggle('scale-[1.8]');
+                }
+            });
+
+            // Close the expanded mobile logo when clicking anywhere else
+            document.addEventListener('click', () => {
+                if (window.innerWidth < 768 && logoContainer.classList.contains('scale-[1.8]')) {
+                    logoContainer.classList.remove('scale-[1.8]');
+                }
+            });
 
         });
     </script>

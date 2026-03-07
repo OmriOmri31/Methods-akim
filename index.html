@@ -224,6 +224,53 @@
         </div>
     </div>
 
+    <!-- Tutorial Modal (Restored) -->
+    <div id="tutorialModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 w-11/12 max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
+            <div class="bg-gradient-to-r from-brand-blue to-brand-purple p-6 text-white flex justify-between items-center shrink-0">
+                <h2 class="text-2xl font-bold flex items-center gap-2">
+                    <span>ברוכים הבאים לספריית המתודות!</span> 🚀
+                </h2>
+                <button id="closeTutorialBtn" class="text-white/80 hover:text-white transition-colors cursor-pointer">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="p-6 md:p-8 overflow-y-auto custom-scroll grow bg-slate-50 dark:bg-slate-900/50 text-slate-700 dark:text-slate-200 leading-relaxed">
+                <p class="mb-4 text-lg font-medium">האתר הזה נבנה כדי לעזור לכם, המדריכים, לבנות פעולות מדהימות וערכיות.</p>
+                
+                <p class="mb-6">אבל שימו לב: המטרה כאן היא לא "להאכיל אתכם בכפית" או לעשות את העבודה במקומכם. תחשבו על האתר הזה בתור <strong>"מחשבון" למבחן במתמטיקה</strong> - הוא כלי עזר מטורף שיחשב עבורכם את המרכיבים, אבל אתם אלו שצריכים להפעיל את הראש, להבין את הנוסחה ולהמציא את הרעיון.</p>
+
+                <h3 class="font-bold text-xl text-brand-dark dark:text-white mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">אז איך זה עובד?</h3>
+                
+                <ol class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="bg-brand-blue/10 text-brand-blue font-bold w-7 h-7 rounded-full flex items-center justify-center shrink-0">1</span>
+                        <div><strong>מציאת השראה:</strong> חפשו מתודות קיימות, סננו לפי קטגוריות או השתמשו בכפתור "הגרל שילוב מתודות" כדי למצוא שילובים מפתיעים.</div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="bg-brand-purple/10 text-brand-purple font-bold w-7 h-7 rounded-full flex items-center justify-center shrink-0">2</span>
+                        <div><strong>פירוק לגורמים:</strong> לחצו על כפתור <svg class="w-4 h-4 inline text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg> על כל מתודה (או הזינו נושא כללי למעלה). המערכת תפרק לכם את המתודה ל"אבני הבניין" והחוקים הכי בסיסיים שלה.</div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="bg-brand-orange/10 text-brand-orange font-bold w-7 h-7 rounded-full flex items-center justify-center shrink-0">3</span>
+                        <div><strong>מחשבון היצירתיות:</strong> זה הקסם האמיתי! אחרי הפירוק, יופיע אזור ליצירת פעילות יצירתית. בחרו "כלי חשיבה" (כמו שילוב, החסרה או היפוך), קראו את שאלת ההכוונה, ונסו להמציא חוק משחק חדש לגמרי.</div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="bg-brand-green/10 text-brand-green font-bold w-7 h-7 rounded-full flex items-center justify-center shrink-0">4</span>
+                        <div><strong>בניית המערך:</strong> אהבתם את הרעיון שחשבתם עליו? לחצו "שמור לפעילות שלי". בסוף תוכלו להעתיק את כל סל הפעילות שלכם ישר לוואטסאפ או לוורד.</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="bg-white dark:bg-slate-800 p-5 border-t border-slate-100 dark:border-slate-700 text-center shrink-0">
+                <button id="letsGoBtn" class="bg-brand-blue hover:bg-blue-600 text-white font-medium py-3 px-10 rounded-full shadow transition-colors cursor-pointer text-lg">
+                    יאללה, בואו נתחיל להמציא!
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Randomizer Modal -->
     <div id="randomModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="bg-white dark:bg-slate-800 w-11/12 max-w-4xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
@@ -745,6 +792,8 @@
                 aiTopicInputArea.classList.remove('hidden');
                 aiResultArea.classList.add('hidden');
                 aiFooterArea.classList.add('hidden');
+                const inventionCalculator = document.getElementById('inventionCalculator');
+                if(inventionCalculator) inventionCalculator.classList.add('hidden');
                 aiTopicInput.value = '';
                 setTimeout(() => aiTopicInput.focus(), 300);
             });
@@ -774,6 +823,8 @@
                 openAiModal();
                 aiTopicInputArea.classList.add('hidden');
                 aiResultArea.classList.remove('hidden');
+                const inventionCalculator = document.getElementById('inventionCalculator');
+                if(inventionCalculator) inventionCalculator.classList.add('hidden');
                 aiResultTitle.textContent = `המכניקה של: ${title}`;
                 
                 // Static vs API logic
@@ -817,9 +868,13 @@
                 aiLoading.classList.add('hidden');
                 aiResultText.innerHTML = text;
                 aiFooterArea.classList.remove('hidden');
+                const inventionCalculator = document.getElementById('inventionCalculator');
+                if(inventionCalculator) inventionCalculator.classList.remove('hidden');
             }
 
             aiRegenerateBtn.addEventListener('click', () => {
+                const inventionCalculator = document.getElementById('inventionCalculator');
+                if(inventionCalculator) inventionCalculator.classList.add('hidden');
                 fetchAiBreakdown(currentAiType, currentAiQuery);
             });
 

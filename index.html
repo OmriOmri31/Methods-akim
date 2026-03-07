@@ -336,53 +336,6 @@
         </div>
     </div>
 
-    <!-- Tutorial Modal -->
-    <div id="tutorialModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white dark:bg-slate-800 w-11/12 max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
-            <div class="bg-gradient-to-r from-brand-blue to-brand-purple p-6 text-white flex justify-between items-center shrink-0">
-                <h2 class="text-2xl font-bold flex items-center gap-2">
-                    <span>ברוכים הבאים לספריית המתודות!</span> 🚀
-                </h2>
-                <button id="closeTutorialBtn" class="text-white/80 hover:text-white transition-colors cursor-pointer">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-            
-            <div class="p-6 md:p-8 overflow-y-auto custom-scroll grow bg-slate-50 dark:bg-slate-900/50 text-slate-700 dark:text-slate-200 leading-relaxed">
-                <p class="mb-4 text-lg font-medium">האתר הזה נבנה כדי לעזור לכם, המדריכים, לבנות פעולות מדהימות וערכיות.</p>
-                
-                <p class="mb-6">אבל שימו לב: המטרה כאן היא לא "להאכיל אתכם בכפית" או לעשות את העבודה במקומכם. תחשבו על האתר הזה בתור <strong>"מחשבון" למבחן במתמטיקה</strong> - הוא כלי עזר מטורף שיחשב עבורכם את המרכיבים, אבל אתם אלו שצריכים להפעיל את הראש, להבין את הנוסחה ולהמציא את הרעיון.</p>
-
-                <h3 class="font-bold text-xl text-brand-dark dark:text-white mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">אז איך זה עובד?</h3>
-                
-                <ol class="space-y-4">
-                    <li class="flex gap-3">
-                        <span class="bg-brand-blue/10 text-brand-blue font-bold w-7 h-7 rounded-full flex items-center justify-center shrink-0">1</span>
-                        <div><strong>מציאת השראה:</strong> חפשו מתודות קיימות, סננו לפי קטגוריות או השתמשו בכפתור "הגרל שילוב מתודות" כדי למצוא שילובים מפתיעים.</div>
-                    </li>
-                    <li class="flex gap-3">
-                        <span class="bg-brand-purple/10 text-brand-purple font-bold w-7 h-7 rounded-full flex items-center justify-center shrink-0">2</span>
-                        <div><strong>פירוק לגורמים:</strong> לחצו על כפתור <svg class="w-4 h-4 inline text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg> על כל מתודה (או הזינו נושא כללי למעלה). המערכת תפרק לכם את המתודה ל"אבני הבניין" והחוקים הכי בסיסיים שלה.</div>
-                    </li>
-                    <li class="flex gap-3">
-                        <span class="bg-brand-orange/10 text-brand-orange font-bold w-7 h-7 rounded-full flex items-center justify-center shrink-0">3</span>
-                        <div><strong>מחשבון היצירתיות:</strong> זה הקסם האמיתי! אחרי הפירוק, יופיע אזור ליצירת פעילות יצירתית. בחרו "כלי חשיבה" (כמו שילוב, החסרה או היפוך), קראו את שאלת ההכוונה, ונסו להמציא חוק משחק חדש לגמרי.</div>
-                    </li>
-                    <li class="flex gap-3">
-                        <span class="bg-brand-green/10 text-brand-green font-bold w-7 h-7 rounded-full flex items-center justify-center shrink-0">4</span>
-                        <div><strong>בניית המערך:</strong> אהבתם את הרעיון שחשבתם עליו? לחצו "שמור לפעילות שלי". בסוף תוכלו להעתיק את כל סל הפעילות שלכם ישר לוואטסאפ או לוורד.</div>
-                    </li>
-                </ol>
-            </div>
-            
-            <div class="bg-white dark:bg-slate-800 p-5 border-t border-slate-100 dark:border-slate-700 text-center shrink-0">
-                <button id="letsGoBtn" class="bg-brand-blue hover:bg-blue-600 text-white font-medium py-3 px-10 rounded-full shadow transition-colors cursor-pointer text-lg">
-                    יאללה, בואו נתחיל להמציא!
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- Songs Modal (Custom Audio Player) -->
     <div id="songsModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="bg-white dark:bg-slate-800 w-11/12 max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
@@ -565,22 +518,22 @@
                     return `<span class="text-xs px-2.5 py-1 rounded-md border font-medium ${lc.classes}">${lc.text}</span>`;
                 }).join('');
 
-                // Fixed the share button SVG: replaced with a clean outbound arrow and added shrink-0 to prevent squishing
+                // Flexbox used here ensures the emoji and title sit perfectly side-by-side in RTL layout
                 return `
                 <div class="game-card relative bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-md border-x border-b border-slate-100 dark:border-slate-700 border-t-4 border-t-${colorCls} p-6 flex flex-col h-full group transition-colors" data-tags="${item.tags.join(',')}">
                     <div class="absolute top-4 left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button class="ai-breakdown-btn p-1.5 text-slate-400 hover:text-brand-purple bg-slate-50 dark:bg-slate-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 rounded-lg transition-colors cursor-pointer" title="פרק מתודה לרכיבים">
-                            <svg class="w-5 h-5 pointer-events-none shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        <button class="ai-breakdown-btn p-1.5 text-slate-400 hover:text-brand-purple bg-slate-50 dark:bg-slate-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 rounded-lg transition-colors cursor-pointer" title="פרק מתודה לרכיבים עם AI">
+                            <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                         </button>
                         <button class="share-btn p-1.5 text-slate-400 hover:text-brand-blue bg-slate-50 dark:bg-slate-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors cursor-pointer" title="שתף מתודה">
-                            <svg class="w-5 h-5 pointer-events-none shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                            <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-5.368m0 5.368l5.662 3.397m-5.662-3.397l5.662-3.397m-.002-1.002a3 3 0 11-5.662-3.397m5.662 3.397l-5.662-3.397M17 19a3 3 0 11-6 0 3 3 0 016 0zm0-14a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         </button>
                         <button class="add-btn p-1.5 text-slate-400 hover:text-brand-rose bg-slate-50 dark:bg-slate-700 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-lg transition-colors cursor-pointer" title="הוסף לפעילות שלי">
-                            <svg class="w-5 h-5 pointer-events-none shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </button>
                     </div>
                     
-                    <div class="flex items-start gap-3 mb-2 pl-24">
+                    <div class="flex items-start gap-3 mb-2 pl-14">
                         <span class="text-3xl leading-none shrink-0 mt-0.5">${conf.emoji}</span>
                         <h3 class="card-title text-xl font-bold text-${colorCls} leading-tight">${item.title}</h3>
                     </div>
@@ -590,7 +543,6 @@
                         <span class="font-bold text-${colorCls} block mb-1 text-xs uppercase tracking-wide">לדוגמה מהשטח:</span>
                         ${item.ex}
                     </div>
-                    <span class="hidden card-components">${item.components || ''}</span>
                     <div class="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-slate-50 dark:border-slate-700 badges-container">
                         ${badgesHTML}
                     </div>
@@ -633,8 +585,8 @@
                 toast.className = `px-5 py-2.5 rounded-full shadow-xl text-white font-medium flex items-center gap-2 transform transition-all translate-y-10 opacity-0 ${bgColor}`;
                 
                 const icon = type === 'success' 
-                    ? `<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`
-                    : `<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+                    ? `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`
+                    : `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
                 
                 toast.innerHTML = `${icon} ${message}`;
                 document.getElementById('toastContainer').appendChild(toast);
@@ -699,10 +651,9 @@
                     const title = card.querySelector('.card-title').textContent.toLowerCase();
                     const desc = card.querySelector('.card-desc').textContent.toLowerCase();
                     const example = card.querySelector('.card-example').textContent.toLowerCase();
-                    const componentsText = card.querySelector('.card-components')?.textContent.toLowerCase() || '';
                     const cardTags = card.dataset.tags.split(',').map(t => t.trim());
                     
-                    const matchSearch = title.includes(searchTerm) || desc.includes(searchTerm) || example.includes(searchTerm) || componentsText.includes(searchTerm);
+                    const matchSearch = title.includes(searchTerm) || desc.includes(searchTerm) || example.includes(searchTerm);
                     
                     let matchTags = true;
                     if (activeFilters.size > 0) {
@@ -729,7 +680,7 @@
                 }
             }
 
-            // --- E. Share & Session Cart & AI Breakdown Actions ---
+            // --- E. Share & Session Cart ---
             let sessionItems = new Map(); 
             const sessionFab = document.getElementById('sessionFab');
             const sessionBadge = document.getElementById('sessionBadge');
@@ -739,13 +690,7 @@
             const emptySessionMsg = document.getElementById('emptySessionMsg');
             const exportSessionBtn = document.getElementById('exportSessionBtn');
 
-            // Tutorial references
-            const tutorialBtn = document.getElementById('tutorialBtn');
-            const tutorialModal = document.getElementById('tutorialModal');
-            const closeTutorialBtn = document.getElementById('closeTutorialBtn');
-            const letsGoBtn = document.getElementById('letsGoBtn');
-
-            // AI specific bindings
+            // AI Features References
             const aiModal = document.getElementById('aiModal');
             const closeAiBtn = document.getElementById('closeAiBtn');
             const aiTopicInputArea = document.getElementById('aiTopicInputArea');
@@ -757,22 +702,10 @@
             const aiResultText = document.getElementById('aiResultText');
             const aiFooterArea = document.getElementById('aiFooterArea');
             const aiRegenerateBtn = document.getElementById('aiRegenerateBtn');
-            const aiCopyBtn = document.getElementById('aiCopyBtn');
             const topicBreakdownBtn = document.getElementById('topicBreakdownBtn');
 
-            // Invention Calculator bindings
-            const inventionCalculator = document.getElementById('inventionCalculator');
-            const calcGrid = document.getElementById('calcGrid');
-            const calcWorkbench = document.getElementById('calcWorkbench');
-            const wbTitle = document.getElementById('wbTitle');
-            const wbFormula = document.getElementById('wbFormula');
-            const wbPrompt = document.getElementById('wbPrompt');
-            const wbInput = document.getElementById('wbInput');
-            const wbSaveBtn = document.getElementById('wbSaveBtn');
-
             let currentAiQuery = '';
-            let currentAiType = '';
-            let currentActiveTool = null;
+            let currentAiType = ''; 
 
             document.addEventListener('click', (e) => {
                 const shareBtn = e.target.closest('.share-btn');
@@ -786,8 +719,112 @@
                 if (aiBtn) handleMethodBreakdown(aiBtn.closest('.game-card'));
             });
 
+            // --- AI MODAL LOGIC ---
+            function openAiModal() {
+                aiModal.classList.remove('pointer-events-none', 'opacity-0');
+                aiModal.firstElementChild.classList.remove('scale-95');
+                aiModal.firstElementChild.classList.add('scale-100');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeAiModal() {
+                aiModal.classList.add('pointer-events-none', 'opacity-0');
+                aiModal.firstElementChild.classList.add('scale-95');
+                aiModal.firstElementChild.classList.remove('scale-100');
+                document.body.style.overflow = '';
+            }
+
+            closeAiBtn.addEventListener('click', closeAiModal);
+            aiModal.addEventListener('click', (e) => {
+                if (e.target === aiModal) closeAiModal();
+            });
+
+            // Top Button: Topic Breakdown
+            topicBreakdownBtn.addEventListener('click', () => {
+                openAiModal();
+                aiTopicInputArea.classList.remove('hidden');
+                aiResultArea.classList.add('hidden');
+                aiFooterArea.classList.add('hidden');
+                aiTopicInput.value = '';
+                setTimeout(() => aiTopicInput.focus(), 300);
+            });
+
+            // User submits a topic to breakdown
+            aiTopicSubmitBtn.addEventListener('click', () => {
+                const topic = aiTopicInput.value.trim();
+                if (!topic) return;
+                currentAiQuery = topic;
+                currentAiType = 'topic';
+                
+                aiTopicInputArea.classList.add('hidden');
+                aiResultArea.classList.remove('hidden');
+                aiResultTitle.textContent = `הרכיבים של: ${topic}`;
+                
+                fetchAiBreakdown(currentAiType, currentAiQuery);
+            });
+
+            // Card Button: Method Breakdown
+            function handleMethodBreakdown(card) {
+                const rawTitle = card.querySelector('.card-title').textContent;
+                const title = rawTitle.replace(/[^\u0590-\u05FF\s()?'"-]/g, '').trim();
+                
+                currentAiQuery = title;
+                currentAiType = 'method';
+                
+                openAiModal();
+                aiTopicInputArea.classList.add('hidden');
+                aiResultArea.classList.remove('hidden');
+                aiResultTitle.textContent = `המכניקה של: ${title}`;
+                
+                // Static vs API logic
+                const methodData = methodsData.find(m => m.title === title);
+                if (methodData && methodData.components) {
+                    showAiResult(methodData.components);
+                } else {
+                    fetchAiBreakdown(currentAiType, currentAiQuery);
+                }
+            }
+
+            // Calls the Netlify Function
+            async function fetchAiBreakdown(type, query) {
+                aiResultText.innerHTML = '';
+                aiLoading.classList.remove('hidden');
+                aiFooterArea.classList.add('hidden');
+
+                try {
+                    const response = await fetch('/.netlify/functions/breakdown', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ type, query })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(data.error || 'אירעה שגיאה בתקשורת מול השרת');
+                    }
+                    
+                    showAiResult(data.result);
+                } catch (error) {
+                    console.error("AI Fetch error:", error);
+                    aiLoading.classList.add('hidden');
+                    aiResultText.innerHTML = `<span class="text-red-500 font-bold">שגיאה:</span> לא הצלחנו לגשת ל-AI כרגע. ודאו שהפונקציה וה-API Key מוגדרים היטב ב-Netlify.`;
+                    aiFooterArea.classList.remove('hidden');
+                }
+            }
+
+            function showAiResult(text) {
+                aiLoading.classList.add('hidden');
+                aiResultText.innerHTML = text;
+                aiFooterArea.classList.remove('hidden');
+            }
+
+            aiRegenerateBtn.addEventListener('click', () => {
+                fetchAiBreakdown(currentAiType, currentAiQuery);
+            });
+
             function handleShare(card) {
-                const title = card.querySelector('.card-title').textContent.replace(/[^\u0590-\u05FF\s()?'"-]/g, '').trim(); 
+                const title = card.querySelector('.card-title').textContent.trim();
                 const desc = card.querySelector('.card-desc').textContent.trim();
                 let exampleText = card.querySelector('.card-example').textContent.replace('לדוגמה מהשטח:', '').trim();
                 
@@ -802,17 +839,15 @@
             }
 
             function toggleSessionItem(card, btnElement) {
-                const title = card.querySelector('.card-title').textContent.replace(/[^\u0590-\u05FF\s()?'"-]/g, '').trim();
+                const title = card.querySelector('.card-title').textContent.trim();
 
                 if (sessionItems.has(title)) {
                     sessionItems.delete(title);
                     btnElement.classList.remove('text-brand-rose', 'bg-rose-50', 'dark:bg-slate-700', 'ring-2', 'ring-brand-rose');
                     btnElement.classList.add('text-slate-400');
-                    showToast('הוסר מהפעילות', 'info');
+                    showToast('הוסר מסל הפעילות', 'info');
                 } else {
-                    // Create a virtual card reference holding both title and desc
-                    const desc = card.querySelector('.card-desc').textContent.trim();
-                    sessionItems.set(title, { desc: desc });
+                    sessionItems.set(title, card);
                     btnElement.classList.remove('text-slate-400');
                     btnElement.classList.add('text-brand-rose', 'bg-rose-50', 'dark:bg-slate-700', 'ring-2', 'ring-brand-rose');
                     showToast('המתודה נוספה לפעילות!', 'success');
@@ -824,8 +859,7 @@
                 if(sessionItems.has(title)) {
                     sessionItems.delete(title);
                     cards.forEach(card => {
-                        const t = card.querySelector('.card-title').textContent.replace(/[^\u0590-\u05FF\s()?'"-]/g, '').trim();
-                        if (t === title) {
+                        if (card.querySelector('.card-title').textContent.trim() === title) {
                             const btnElement = card.querySelector('.add-btn');
                             if(btnElement) {
                                 btnElement.classList.remove('text-brand-rose', 'bg-rose-50', 'dark:bg-slate-700', 'ring-2', 'ring-brand-rose');
@@ -849,152 +883,6 @@
                     sessionBadge.classList.remove('scale-100');
                 }
             }
-
-            // Tutorial Modal Logic
-            function openTutorialModal() {
-                tutorialModal.classList.remove('pointer-events-none', 'opacity-0');
-                tutorialModal.firstElementChild.classList.remove('scale-95');
-                tutorialModal.firstElementChild.classList.add('scale-100');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeTutorial() {
-                tutorialModal.classList.add('pointer-events-none', 'opacity-0');
-                tutorialModal.firstElementChild.classList.add('scale-95');
-                tutorialModal.firstElementChild.classList.remove('scale-100');
-                document.body.style.overflow = '';
-            }
-
-            if(tutorialBtn) tutorialBtn.addEventListener('click', openTutorialModal);
-            if(closeTutorialBtn) closeTutorialBtn.addEventListener('click', closeTutorial);
-            if(letsGoBtn) letsGoBtn.addEventListener('click', closeTutorial);
-            if(tutorialModal) {
-                tutorialModal.addEventListener('click', (e) => {
-                    if (e.target === tutorialModal) closeTutorial();
-                });
-            }
-
-            // --- Render Songs List ---
-            const songsListContainer = document.getElementById('songsList');
-            if (songsListContainer) {
-                // מסנן רק את השירים שיש להם נתיב מוגדר ולא ריק
-                const validSongs = campSongsData.filter(song => song.path && song.path.trim() !== "");
-                
-                if (validSongs.length > 0) {
-                    songsListContainer.innerHTML = validSongs.map(song => `
-                        <li class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-between">
-                            <div class="flex items-center gap-4">
-                                <button class="play-song-btn w-12 h-12 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center hover:bg-brand-blue hover:text-white transition-colors cursor-pointer" data-src="${song.path}">
-                                    <svg class="play-icon w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-                                    <svg class="pause-icon w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                                </button>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 dark:text-white">${song.year}</h4>
-                                    <p class="text-sm text-slate-500 dark:text-slate-400">${song.name}</p>
-                                </div>
-                            </div>
-                            <a href="${song.path}" download class="p-2 text-slate-400 hover:text-brand-teal transition-colors cursor-pointer" title="הורדת שיר">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            </a>
-                        </li>
-                    `).join('');
-                } else {
-                    songsListContainer.innerHTML = `<li class="text-center text-slate-500 dark:text-slate-400 py-4">בקרוב יעלו שירי המחנה לארכיון.</li>`;
-                }
-            }
-
-            // --- Audio Player & Songs Modal Logic ---
-            const songsBtn = document.getElementById('songsBtn');
-            const songsModal = document.getElementById('songsModal');
-            const closeSongsBtn = document.getElementById('closeSongsBtn');
-            const playBtns = document.querySelectorAll('.play-song-btn');
-            
-            let currentAudio = null;
-            let currentPlayBtn = null;
-
-            function openSongsModal() {
-                songsModal.classList.remove('pointer-events-none', 'opacity-0');
-                songsModal.firstElementChild.classList.remove('scale-95');
-                songsModal.firstElementChild.classList.add('scale-100');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeSongsModal() {
-                songsModal.classList.add('pointer-events-none', 'opacity-0');
-                songsModal.firstElementChild.classList.add('scale-95');
-                songsModal.firstElementChild.classList.remove('scale-100');
-                document.body.style.overflow = '';
-                // Pause audio when closing modal to avoid ghost playing
-                if (currentAudio && !currentAudio.paused) {
-                    currentAudio.pause();
-                    resetPlayButton(currentPlayBtn);
-                }
-            }
-
-            if(songsBtn) songsBtn.addEventListener('click', openSongsModal);
-            if(closeSongsBtn) closeSongsBtn.addEventListener('click', closeSongsModal);
-            if(songsModal) {
-                songsModal.addEventListener('click', (e) => {
-                    if (e.target === songsModal) closeSongsModal();
-                });
-            }
-
-            function resetPlayButton(btn) {
-                if (!btn) return;
-                btn.querySelector('.play-icon').classList.remove('hidden');
-                btn.querySelector('.pause-icon').classList.add('hidden');
-                btn.classList.remove('bg-brand-blue', 'text-white');
-                btn.classList.add('bg-brand-blue/10', 'text-brand-blue');
-            }
-
-            function setPlayingButton(btn) {
-                btn.querySelector('.play-icon').classList.add('hidden');
-                btn.querySelector('.pause-icon').classList.remove('hidden');
-                btn.classList.remove('bg-brand-blue/10', 'text-brand-blue');
-                btn.classList.add('bg-brand-blue', 'text-white');
-            }
-
-            playBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const src = btn.dataset.src;
-                    
-                    // Pause if clicking the currently playing song
-                    if (currentPlayBtn === btn && currentAudio && !currentAudio.paused) {
-                        currentAudio.pause();
-                        resetPlayButton(btn);
-                        return;
-                    }
-
-                    // Stop current audio if playing a different song
-                    if (currentAudio) {
-                        currentAudio.pause();
-                        resetPlayButton(currentPlayBtn);
-                    }
-
-                    // Resume if clicking the same song that was paused
-                    if (currentPlayBtn === btn && currentAudio && currentAudio.paused) {
-                        currentAudio.play();
-                        setPlayingButton(btn);
-                        return;
-                    }
-
-                    // Create and play new audio
-                    currentAudio = new Audio(src);
-                    currentPlayBtn = btn;
-                    
-                    setPlayingButton(btn);
-                    
-                    currentAudio.play().catch(e => {
-                        console.error("Audio playback failed:", e);
-                        showToast('שגיאה בהפעלת השיר (קובץ לא קיים).', 'info');
-                        resetPlayButton(btn);
-                    });
-
-                    currentAudio.onended = () => {
-                        resetPlayButton(btn);
-                    };
-                });
-            });
 
             sessionFab.addEventListener('click', () => {
                 renderSessionList();
@@ -1028,20 +916,16 @@
                     exportSessionBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                     
                     let counter = 1;
-                    sessionItems.forEach((data, title) => {
+                    sessionItems.forEach((card, title) => {
                         const cleanTitle = title.replace(/[^א-ת\s()?'"-]/g, '').trim();
-                        const descPreview = data.desc ? data.desc : '';
                         const li = document.createElement('li');
                         li.className = 'bg-white dark:bg-slate-800 p-3 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex justify-between items-center';
                         li.innerHTML = `
-                            <div class="flex flex-col w-full overflow-hidden gap-1.5">
-                                <div class="flex items-center gap-3">
-                                    <span class="bg-brand-blue/10 text-brand-blue font-bold w-6 h-6 rounded-full flex items-center justify-center text-sm shrink-0">${counter}</span>
-                                    <span class="font-bold text-slate-700 dark:text-slate-200 truncate">${cleanTitle}</span>
-                                </div>
-                                ${descPreview ? `<div class="text-xs text-slate-500 dark:text-slate-400 pl-10 pr-9 line-clamp-2 leading-relaxed" title="${descPreview.replace(/"/g, '&quot;')}">${descPreview}</div>` : ''}
+                            <div class="flex items-center gap-3">
+                                <span class="bg-brand-blue/10 text-brand-blue font-bold w-6 h-6 rounded-full flex items-center justify-center text-sm">${counter}</span>
+                                <span class="font-bold text-slate-700 dark:text-slate-200">${cleanTitle}</span>
                             </div>
-                            <button class="remove-session-btn text-slate-400 hover:text-red-500 p-2 rounded-md transition-colors cursor-pointer shrink-0 ml-1" data-title="${title}">
+                            <button class="remove-session-btn text-slate-400 hover:text-red-500 p-1 rounded-md transition-colors cursor-pointer" data-title="${title}">
                                 <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                             </button>
                         `;
@@ -1057,9 +941,9 @@
                 let exportText = `📋 *הפעילות שלי:*\n\n`;
                 let counter = 1;
                 
-                sessionItems.forEach((data, title) => {
+                sessionItems.forEach((card, title) => {
                     const cleanTitle = title.replace(/[^א-ת\s()?'"-]/g, '').trim();
-                    const desc = data.desc ? data.desc : '';
+                    const desc = card.querySelector('.card-desc').textContent.trim();
                     exportText += `${counter}. *${cleanTitle}*\n${desc}\n\n`;
                     counter++;
                 });
@@ -1119,8 +1003,8 @@
                 lockBtn.title = isLocked ? "שחרר קיבוע" : "קבע מתודה זו";
                 
                 lockBtn.innerHTML = isLocked 
-                    ? `<svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>`
-                    : `<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>`;
+                    ? `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>`
+                    : `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>`;
 
                 lockBtn.addEventListener('click', () => {
                     if (slotIndex === 1) slot1.locked = !slot1.locked;
@@ -1189,180 +1073,292 @@
                 if (e.target === randomModal) closeRandomModal();
             });
 
-            // --- G. AI Breakdown & Invention Calculator Logic ---
-            
-            // Build Calculator Buttons
-            function initCalculator() {
-                calcGrid.innerHTML = creativityTools.map(tool => `
-                    <button class="calc-tool-btn bg-white dark:bg-slate-700 shadow-sm border border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-medium py-2 px-1 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer" data-tool="${tool.id}">
-                        <span class="text-lg">${tool.icon}</span> <span class="text-sm sm:text-base">${tool.name}</span>
-                    </button>
-                `).join('');
+            // --- Tutorial & Logo Events ---
+            const tutorialBtn = document.getElementById('tutorialBtn');
+            const tutorialModal = document.getElementById('tutorialModal');
+            const closeTutorialBtn = document.getElementById('closeTutorialBtn');
+            const letsGoBtn = document.getElementById('letsGoBtn');
 
-                const toolBtns = document.querySelectorAll('.calc-tool-btn');
-                toolBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        // UI toggle
-                        toolBtns.forEach(b => b.classList.remove('ring-2', 'ring-brand-purple', 'bg-purple-50', 'dark:bg-purple-900/30'));
-                        btn.classList.add('ring-2', 'ring-brand-purple', 'bg-purple-50', 'dark:bg-purple-900/30');
+            function openTutorialModal() {
+                tutorialModal.classList.remove('pointer-events-none', 'opacity-0');
+                tutorialModal.firstElementChild.classList.remove('scale-95');
+                tutorialModal.firstElementChild.classList.add('scale-100');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeTutorial() {
+                tutorialModal.classList.add('pointer-events-none', 'opacity-0');
+                tutorialModal.firstElementChild.classList.add('scale-95');
+                tutorialModal.firstElementChild.classList.remove('scale-100');
+                document.body.style.overflow = '';
+            }
+
+            if(tutorialBtn) tutorialBtn.addEventListener('click', openTutorialModal);
+            if(closeTutorialBtn) closeTutorialBtn.addEventListener('click', closeTutorial);
+            if(letsGoBtn) letsGoBtn.addEventListener('click', closeTutorial);
+            if(tutorialModal) {
+                tutorialModal.addEventListener('click', (e) => {
+                    if (e.target === tutorialModal) closeTutorial();
+                });
+            }
+
+            const logoContainer = document.getElementById('logoContainer');
+            logoContainer.addEventListener('click', (e) => {
+                if (window.innerWidth < 768) {
+                    e.stopPropagation();
+                    logoContainer.classList.toggle('scale-[2.5]');
+                }
+            });
+
+            document.addEventListener('click', () => {
+                if (window.innerWidth < 768 && logoContainer.classList.contains('scale-[2.5]')) {
+                    logoContainer.classList.remove('scale-[2.5]');
+                }
+            });
+
+            // --- Render Songs List ---
+            const songsListContainer = document.getElementById('songsList');
+            if (songsListContainer) {
+                const validSongs = campSongsData.filter(song => song.path && song.path.trim() !== "");
+                
+                if (validSongs.length > 0) {
+                    songsListContainer.innerHTML = validSongs.map((song, index) => {
+                        const cleanYear = song.year.replace('מחנה קיץ', '').trim();
+                        return `
+                        <li class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col gap-2">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <button class="play-song-btn w-12 h-12 shrink-0 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center hover:bg-brand-blue hover:text-white transition-colors cursor-pointer" data-src="${song.path}" data-index="${index}">
+                                        <svg class="play-icon w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                                        <svg class="pause-icon w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                                    </button>
+                                    <h4 class="font-bold text-slate-800 dark:text-white text-lg">${song.name} - ${cleanYear}</h4>
+                                </div>
+                                <a href="${song.path}" download="${song.name} ${cleanYear}.mp3" class="p-2 text-slate-400 hover:text-brand-teal transition-colors cursor-pointer shrink-0" title="הורדת שיר">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                </a>
+                            </div>
+                            <div class="progress-container hidden items-center gap-3 mt-1 px-2 w-full" id="progress-container-${index}">
+                                <span class="current-time text-xs text-slate-500 font-medium w-8 text-left">0:00</span>
+                                <input type="range" value="0" min="0" max="100" class="song-slider flex-grow h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                                <span class="total-time text-xs text-slate-500 font-medium w-8 text-right">0:00</span>
+                            </div>
+                        </li>
+                    `}).join('');
+                } else {
+                    songsListContainer.innerHTML = `<li class="text-center text-slate-500 dark:text-slate-400 py-4">בקרוב יעלו שירי המחנה לארכיון.</li>`;
+                }
+            }
+
+            // --- Audio Player & Songs Modal Logic ---
+            const songsBtn = document.getElementById('songsBtn');
+            const songsModal = document.getElementById('songsModal');
+            const closeSongsBtn = document.getElementById('closeSongsBtn');
+            const playBtns = document.querySelectorAll('.play-song-btn');
+            
+            let currentAudio = null;
+            let currentPlayBtn = null;
+            let currentProgressContainer = null;
+            let timeUpdateListener = null;
+
+            function formatTime(seconds) {
+                if (isNaN(seconds) || seconds < 0) return "0:00";
+                const m = Math.floor(seconds / 60);
+                const s = Math.floor(seconds % 60);
+                return `${m}:${s < 10 ? '0' : ''}${s}`;
+            }
+
+            function openSongsModal() {
+                songsModal.classList.remove('pointer-events-none', 'opacity-0');
+                songsModal.firstElementChild.classList.remove('scale-95');
+                songsModal.firstElementChild.classList.add('scale-100');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSongsModal() {
+                songsModal.classList.add('pointer-events-none', 'opacity-0');
+                songsModal.firstElementChild.classList.add('scale-95');
+                songsModal.firstElementChild.classList.remove('scale-100');
+                document.body.style.overflow = '';
+                // Audio is NOT paused here so it can play in the background
+            }
+
+            if(songsBtn) songsBtn.addEventListener('click', openSongsModal);
+            if(closeSongsBtn) closeSongsBtn.addEventListener('click', closeSongsModal);
+            if(songsModal) {
+                songsModal.addEventListener('click', (e) => {
+                    if (e.target === songsModal) closeSongsModal();
+                });
+            }
+
+            function resetPlayButton(btn) {
+                if (!btn) return;
+                btn.querySelector('.play-icon').classList.remove('hidden');
+                btn.querySelector('.pause-icon').classList.add('hidden');
+                btn.classList.remove('bg-brand-blue', 'text-white');
+                btn.classList.add('bg-brand-blue/10', 'text-brand-blue');
+            }
+
+            function setPlayingButton(btn) {
+                btn.querySelector('.play-icon').classList.add('hidden');
+                btn.querySelector('.pause-icon').classList.remove('hidden');
+                btn.classList.remove('bg-brand-blue/10', 'text-brand-blue');
+                btn.classList.add('bg-brand-blue', 'text-white');
+            }
+
+            playBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const src = btn.dataset.src;
+                    const index = btn.dataset.index;
+                    const progressContainer = document.getElementById(`progress-container-${index}`);
+                    
+                    if (currentPlayBtn === btn && currentAudio && !currentAudio.paused) {
+                        currentAudio.pause();
+                        resetPlayButton(btn);
+                        return;
+                    }
+
+                    if (currentPlayBtn !== btn) {
+                        if (currentAudio) {
+                            currentAudio.pause();
+                            resetPlayButton(currentPlayBtn);
+                            if (currentProgressContainer) currentProgressContainer.classList.add('hidden');
+                        }
                         
-                        // Show workbench
-                        const tool = creativityTools.find(t => t.id === btn.dataset.tool);
-                        currentActiveTool = tool;
+                        currentAudio = new Audio(src);
+                        currentPlayBtn = btn;
+                        currentProgressContainer = progressContainer;
                         
-                        wbTitle.innerHTML = `נוסחת ה${tool.name} ${tool.icon}`;
-                        wbFormula.innerHTML = tool.formula; // using innerHTML for line breaks/formatting
-                        wbPrompt.textContent = tool.prompt;
-                        wbInput.value = '';
+                        const slider = progressContainer.querySelector('.song-slider');
+                        const currentTimeEl = progressContainer.querySelector('.current-time');
+                        const totalTimeEl = progressContainer.querySelector('.total-time');
                         
-                        calcWorkbench.classList.remove('hidden');
-                        setTimeout(() => wbInput.focus(), 100);
+                        if(timeUpdateListener) {
+                            currentAudio.removeEventListener('timeupdate', timeUpdateListener);
+                        }
+
+                        timeUpdateListener = () => {
+                            currentTimeEl.textContent = formatTime(currentAudio.currentTime);
+                            if (currentAudio.duration) {
+                                totalTimeEl.textContent = formatTime(currentAudio.duration);
+                                // Don't jump the slider if user is currently moving it
+                                if (!slider.matches(':active')) {
+                                    slider.value = (currentAudio.currentTime / currentAudio.duration) * 100;
+                                }
+                            }
+                        };
+
+                        currentAudio.addEventListener('timeupdate', timeUpdateListener);
+                        currentAudio.addEventListener('loadedmetadata', () => {
+                            totalTimeEl.textContent = formatTime(currentAudio.duration);
+                        });
+                        
+                        slider.addEventListener('input', () => {
+                            if (currentAudio && currentAudio.duration) {
+                                currentAudio.currentTime = (slider.value / 100) * currentAudio.duration;
+                            }
+                        });
+
+                        currentAudio.addEventListener('play', () => {
+                            if(songsBtn) songsBtn.classList.add('animate-pulse', 'text-brand-blue');
+                        });
+                        currentAudio.addEventListener('pause', () => {
+                            if(songsBtn) songsBtn.classList.remove('animate-pulse', 'text-brand-blue');
+                        });
+                        currentAudio.addEventListener('ended', () => {
+                            resetPlayButton(btn);
+                            if(songsBtn) songsBtn.classList.remove('animate-pulse', 'text-brand-blue');
+                            slider.value = 0;
+                            currentTimeEl.textContent = "0:00";
+                        });
+                    }
+                    
+                    if (currentProgressContainer) {
+                        currentProgressContainer.classList.remove('hidden');
+                        currentProgressContainer.classList.add('flex');
+                    }
+
+                    setPlayingButton(btn);
+                    currentAudio.play().catch(e => {
+                        console.error("Audio playback failed:", e);
+                        showToast('שגיאה בהפעלת השיר (קובץ לא קיים).', 'info');
+                        resetPlayButton(btn);
                     });
                 });
+            });
+
+            // --- G. AI Breakdown & Invention Calculator Logic ---
+
+            const calcGrid = document.getElementById('calcGrid');
+            const calcWorkbench = document.getElementById('calcWorkbench');
+            const wbTitle = document.getElementById('wbTitle');
+            const wbFormula = document.getElementById('wbFormula');
+            const wbPrompt = document.getElementById('wbPrompt');
+            const wbInput = document.getElementById('wbInput');
+            const wbSaveBtn = document.getElementById('wbSaveBtn');
+
+            let currentActiveTool = null;
+
+            // Build Calculator Buttons
+            function initCalculator() {
+                if(calcGrid) {
+                    calcGrid.innerHTML = creativityTools.map(tool => `
+                        <button class="calc-tool-btn bg-white dark:bg-slate-700 shadow-sm border border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-medium py-2 px-1 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer" data-tool="${tool.id}">
+                            <span class="text-lg">${tool.icon}</span> <span class="text-sm sm:text-base">${tool.name}</span>
+                        </button>
+                    `).join('');
+
+                    const toolBtns = document.querySelectorAll('.calc-tool-btn');
+                    toolBtns.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            // UI toggle
+                            toolBtns.forEach(b => b.classList.remove('ring-2', 'ring-brand-purple', 'bg-purple-50', 'dark:bg-purple-900/30'));
+                            btn.classList.add('ring-2', 'ring-brand-purple', 'bg-purple-50', 'dark:bg-purple-900/30');
+                            
+                            // Show workbench
+                            const tool = creativityTools.find(t => t.id === btn.dataset.tool);
+                            currentActiveTool = tool;
+                            
+                            wbTitle.innerHTML = `נוסחת ה${tool.name} ${tool.icon}`;
+                            wbFormula.innerHTML = tool.formula; 
+                            wbPrompt.textContent = tool.prompt;
+                            wbInput.value = '';
+                            
+                            calcWorkbench.classList.remove('hidden');
+                            setTimeout(() => wbInput.focus(), 100);
+                        });
+                    });
+                }
             }
             initCalculator();
 
             // Save custom invention to session
-            wbSaveBtn.addEventListener('click', () => {
-                const idea = wbInput.value.trim();
-                if (!idea) {
-                    showToast('היי, לא הקלדת שום רעיון...', 'info');
-                    return;
-                }
-                
-                const virtualTitle = `[המצאה: ${currentActiveTool.name}] ${currentAiQuery}`;
-                sessionItems.set(virtualTitle, { desc: idea });
-                
-                updateSessionBadge();
-                showToast('המצאה גאונית! נוספה לפעילות שלך.', 'success');
-                
-                wbInput.value = '';
-                calcWorkbench.classList.add('hidden');
-                document.querySelectorAll('.calc-tool-btn').forEach(b => b.classList.remove('ring-2', 'ring-brand-purple', 'bg-purple-50', 'dark:bg-purple-900/30'));
-            });
-
-            // Modals Logic
-            function openAiModal() {
-                aiModal.classList.remove('pointer-events-none', 'opacity-0');
-                aiModal.firstElementChild.classList.remove('scale-95');
-                aiModal.firstElementChild.classList.add('scale-100');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeAiModal() {
-                aiModal.classList.add('pointer-events-none', 'opacity-0');
-                aiModal.firstElementChild.classList.add('scale-95');
-                aiModal.firstElementChild.classList.remove('scale-100');
-                document.body.style.overflow = '';
-                
-                // Reset calc state on close
-                calcWorkbench.classList.add('hidden');
-                document.querySelectorAll('.calc-tool-btn').forEach(b => b.classList.remove('ring-2', 'ring-brand-purple', 'bg-purple-50', 'dark:bg-purple-900/30'));
-            }
-
-            closeAiBtn.addEventListener('click', closeAiModal);
-            aiModal.addEventListener('click', (e) => {
-                if (e.target === aiModal) closeAiModal();
-            });
-
-            // Top Button: Topic Breakdown
-            if(topicBreakdownBtn) {
-                topicBreakdownBtn.addEventListener('click', () => {
-                    openAiModal();
-                    aiTopicInputArea.classList.remove('hidden');
-                    aiResultArea.classList.add('hidden');
-                    aiFooterArea.classList.add('hidden');
-                    inventionCalculator.classList.add('hidden');
-                    aiTopicInput.value = '';
-                    setTimeout(() => aiTopicInput.focus(), 300);
-                });
-            }
-
-            // User submits a topic to breakdown
-            if(aiTopicSubmitBtn) {
-                aiTopicSubmitBtn.addEventListener('click', () => {
-                    const topic = aiTopicInput.value.trim();
-                    if (!topic) return;
-                    currentAiQuery = topic;
-                    currentAiType = 'topic';
-                    
-                    aiTopicInputArea.classList.add('hidden');
-                    aiResultArea.classList.remove('hidden');
-                    aiResultTitle.textContent = `הרכיבים של: ${topic}`;
-                    
-                    fetchAiBreakdown(currentAiType, currentAiQuery);
-                });
-            }
-
-            // Card Button: Method Breakdown
-            function handleMethodBreakdown(card) {
-                const title = card.querySelector('.card-title').textContent.replace(/[^\u0590-\u05FF\s()?'"-]/g, '').trim();
-                
-                currentAiQuery = title;
-                currentAiType = 'method';
-                
-                openAiModal();
-                aiTopicInputArea.classList.add('hidden');
-                aiResultArea.classList.remove('hidden');
-                inventionCalculator.classList.add('hidden');
-                aiResultTitle.textContent = `המכניקה של: ${title}`;
-                
-                const methodData = methodsData.find(m => m.title === title);
-                if (methodData && methodData.components) {
-                    showAiResult(methodData.components);
-                } else {
-                    fetchAiBreakdown(currentAiType, currentAiQuery);
-                }
-            }
-
-            async function fetchAiBreakdown(type, query) {
-                aiResultText.innerHTML = '';
-                aiLoading.classList.remove('hidden');
-                aiFooterArea.classList.add('hidden');
-                inventionCalculator.classList.add('hidden');
-
-                try {
-                    // Using the standard static fetch URL as requested
-                    const response = await fetch('/.netlify/functions/breakdown', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ type, query })
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (!response.ok) {
-                        throw new Error(data.error || 'אירעה שגיאה בתקשורת מול השרת');
+            if(wbSaveBtn) {
+                wbSaveBtn.addEventListener('click', () => {
+                    const idea = wbInput.value.trim();
+                    if (!idea) {
+                        showToast('היי, לא הקלדת שום רעיון...', 'info');
+                        return;
                     }
                     
-                    showAiResult(data.result);
-                } catch (error) {
-                    console.error("AI Fetch error:", error);
-                    aiLoading.classList.add('hidden');
-                    aiResultText.innerHTML = `<span class="text-brand-rose font-bold">שגיאה:</span> לא הצלחנו לגשת ל-AI כרגע.`;
-                    aiFooterArea.classList.remove('hidden');
-                }
-            }
+                    const virtualTitle = `[המצאה: ${currentActiveTool.name}] ${currentAiQuery}`;
+                    // Adding a virtual card element for the map
+                    const virtualCard = document.createElement('div');
+                    virtualCard.innerHTML = `<span class="card-desc">${idea}</span>`;
 
-            function showAiResult(text) {
-                aiLoading.classList.add('hidden');
-                aiResultText.innerHTML = text;
-                aiFooterArea.classList.remove('hidden');
-                
-                // Unhide the Invention Calculator once result is rendered
-                inventionCalculator.classList.remove('hidden');
-            }
-
-            // Regenerate Button
-            if(aiRegenerateBtn) {
-                aiRegenerateBtn.addEventListener('click', () => {
+                    sessionItems.set(virtualTitle, virtualCard);
+                    
+                    updateSessionBadge();
+                    showToast('המצאה גאונית! נוספה לפעילות שלך.', 'success');
+                    
+                    wbInput.value = '';
                     calcWorkbench.classList.add('hidden');
                     document.querySelectorAll('.calc-tool-btn').forEach(b => b.classList.remove('ring-2', 'ring-brand-purple', 'bg-purple-50', 'dark:bg-purple-900/30'));
-                    fetchAiBreakdown(currentAiType, currentAiQuery);
                 });
             }
 
             // Copy AI Result Button
+            const aiCopyBtn = document.getElementById('aiCopyBtn');
             if(aiCopyBtn) {
                 aiCopyBtn.addEventListener('click', () => {
                     const title = aiResultTitle.textContent.trim();
@@ -1378,25 +1374,7 @@
                 });
             }
 
-            // --- Logo Interaction ---
-            const logoContainer = document.getElementById('logoContainer');
-            
-            logoContainer.addEventListener('click', (e) => {
-                // Only toggle sizing on mobile screens on click
-                if (window.innerWidth < 768) {
-                    e.stopPropagation(); // Prevent the document click listener from immediately hiding it
-                    logoContainer.classList.toggle('scale-[4]');
-                }
-            });
-
-            // Close the expanded mobile logo when clicking anywhere else
-            document.addEventListener('click', () => {
-                if (window.innerWidth < 768 && logoContainer.classList.contains('scale-[4]')) {
-                    logoContainer.classList.remove('scale-[4]');
-                }
-            });
-
-        });
+        }); // End of DOMContentLoaded
     </script>
 </body>
 </html>

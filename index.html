@@ -71,6 +71,11 @@
 
         <!-- Utility Buttons - Left aligned -->
         <div class="absolute top-4 left-4 md:top-6 md:left-6 z-30 flex gap-2">
+            <!-- Songs Button -->
+            <button id="songsBtn" class="bg-white/20 hover:bg-white/30 p-3 rounded-full shadow-md backdrop-blur-sm transition-all cursor-pointer" title="שירי מחנה">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
+            </button>
+            
             <!-- Tutorial Button -->
             <button id="tutorialBtn" class="bg-white/20 hover:bg-white/30 p-3 rounded-full shadow-md backdrop-blur-sm transition-all cursor-pointer" title="איך משתמשים?">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -378,6 +383,28 @@
         </div>
     </div>
 
+    <!-- Songs Modal (Custom Audio Player) -->
+    <div id="songsModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 w-11/12 max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
+            <div class="bg-gradient-to-r from-brand-teal to-brand-blue p-6 text-white flex justify-between items-center shrink-0">
+                <h2 class="text-2xl font-bold flex items-center gap-2">
+                    <span>פסקול המחנות</span> 🎵
+                </h2>
+                <button id="closeSongsBtn" class="text-white/80 hover:text-white transition-colors cursor-pointer">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="p-6 md:p-8 overflow-y-auto custom-scroll grow bg-slate-50 dark:bg-slate-900/50">
+                <p class="mb-6 text-slate-600 dark:text-slate-300 font-medium">ארכיון המורל והמסורת שלנו. ניתן להאזין ישירות או להוריד למכשיר:</p>
+                
+                <ul class="space-y-4" id="songsList">
+                    <!-- רשימת השירים תוזרק לכאן אוטומטית מהקוד -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <!-- JS Logic: Data Generation & Interactivity -->
     <script>
         // 1. DATA: ALL 71 METHODS (Ensures no truncation!)
@@ -477,7 +504,37 @@
             { id: 'divide', name: 'חלוקה', icon: '➗', formula: 'בחר רכיב פנימי (חוק, שלב, תפקיד או לוח) ופרק אותו לחלקים קטנים. פזר את החלקים מחדש במרחב, בזמן, במבנה או במשמעות.', prompt: 'איך זה ישפיע על הדינמיקה אם הרכיב לא יהיה שלם אחד, אלא מפוזר לאורך הפעולה או במרחב החדר?' }
         ];
 
-        // 3. CORE LOGIC
+        // 3. CAMP SONGS DATA - אזור הוספת שירים בקלות
+        // רק שירים שיש להם נתיב (path) תקין ומלא יוצגו באתר באופן אוטומטי!
+        const campSongsData = [
+            { year: "מחנה קיץ 2035", name: "שם השיר", path: "" },
+            { year: "מחנה קיץ 2034", name: "שם השיר", path: "" },
+            { year: "מחנה קיץ 2033", name: "שם השיר", path: "" },
+            { year: "מחנה קיץ 2032", name: "שם השיר", path: "" },
+            { year: "מחנה קיץ 2031", name: "שם השיר", path: "" },
+            { year: "מחנה קיץ 2030", name: "שם השיר", path: "" },
+            { year: "מחנה קיץ 2029", name: "שם השיר", path: "" },
+            { year: "מחנה קיץ 2028", name: "שם השיר", path: "" },
+            { year: "מחנה קיץ 2027", name: "שם השיר", path: "" },
+            { year: "מחנה קיץ 2026", name: "שם השיר", path: "" },
+            { year: "מחנה קיץ 2025", name: "נכנסים למסך", path: "KfarSongs\2025 נכנסים למסך.mp3" },
+            { year: "מחנה קיץ 2024", name: "המערב הפרוע", path: "KfarSongs\2024 המערב הפרוע.mp3" },
+            { year: "מחנה קיץ 2023", name: "אי בודד", path: "KfarSongs\2023 אי בודד.mp3" },
+            { year: "מחנה קיץ 2022", name: "מצילים את העולם", path: "KfarSongs\2022 מצילים את העולם.mp3" },
+            { year: "מחנה קיץ 2021", name: "בלשים", path: "KfarSongs\2021 בלשים.mp3" },
+            { year: "מחנה קיץ 2019", name: "מחזות זמר", path: "KfarSongs\2019 מחזות זמר.mp3" },
+            { year: "מחנה קיץ 2018", name: "נוסעים בזמן", path: "KfarSongs\2018 נוסעים בזמן.mp3" },
+            { year: "מחנה קיץ 2017", name: "עדות ושורשים", path: "KfarSongs\2017 עדות ושורשים.mp3" },
+            { year: "מחנה קיץ 2016", name: "בונים מדינה", path: "KfarSongs\2016 בונים מדינה.mp3" },
+            { year: "מחנה קיץ 2015", name: "מיתולוגיה יוונית", path: "KfarSongs\2015 מיתולוגיה יוונית.mp3" },
+            { year: "מחנה קיץ 2014", name: "ארץ לעולם לא", path: "KfarSongs\2014 ארץ לעולם לא.mp3" },
+            { year: "מחנה קיץ 2013", name: "סיפורי תנך", path: "KfarSongs\2013 סיפורי תנ_ך.mp3" },
+            { year: "מחנה קיץ 2012", name: "מוזיקה", path: "KfarSongs\2012 מוזיקה.mp3" },
+            { year: "מחנה קיץ 2011", name: "אגדות", path: "KfarSongs\2011 אגדות.mp3" },
+            { year: "מחנה קיץ 2010", name: "שם השיר", path: "" }
+        ];
+
+        // 4. CORE LOGIC
         document.addEventListener('DOMContentLoaded', () => {
             
             // --- Scroll to Top Logic ---
@@ -816,6 +873,128 @@
                     if (e.target === tutorialModal) closeTutorial();
                 });
             }
+
+            // --- Render Songs List ---
+            const songsListContainer = document.getElementById('songsList');
+            if (songsListContainer) {
+                // מסנן רק את השירים שיש להם נתיב מוגדר ולא ריק
+                const validSongs = campSongsData.filter(song => song.path && song.path.trim() !== "");
+                
+                if (validSongs.length > 0) {
+                    songsListContainer.innerHTML = validSongs.map(song => `
+                        <li class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <button class="play-song-btn w-12 h-12 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center hover:bg-brand-blue hover:text-white transition-colors cursor-pointer" data-src="${song.path}">
+                                    <svg class="play-icon w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                                    <svg class="pause-icon w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                                </button>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 dark:text-white">${song.year}</h4>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400">${song.name}</p>
+                                </div>
+                            </div>
+                            <a href="${song.path}" download class="p-2 text-slate-400 hover:text-brand-teal transition-colors cursor-pointer" title="הורדת שיר">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            </a>
+                        </li>
+                    `).join('');
+                } else {
+                    songsListContainer.innerHTML = `<li class="text-center text-slate-500 dark:text-slate-400 py-4">בקרוב יעלו שירי המחנה לארכיון.</li>`;
+                }
+            }
+
+            // --- Audio Player & Songs Modal Logic ---
+            const songsBtn = document.getElementById('songsBtn');
+            const songsModal = document.getElementById('songsModal');
+            const closeSongsBtn = document.getElementById('closeSongsBtn');
+            const playBtns = document.querySelectorAll('.play-song-btn');
+            
+            let currentAudio = null;
+            let currentPlayBtn = null;
+
+            function openSongsModal() {
+                songsModal.classList.remove('pointer-events-none', 'opacity-0');
+                songsModal.firstElementChild.classList.remove('scale-95');
+                songsModal.firstElementChild.classList.add('scale-100');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSongsModal() {
+                songsModal.classList.add('pointer-events-none', 'opacity-0');
+                songsModal.firstElementChild.classList.add('scale-95');
+                songsModal.firstElementChild.classList.remove('scale-100');
+                document.body.style.overflow = '';
+                // Pause audio when closing modal to avoid ghost playing
+                if (currentAudio && !currentAudio.paused) {
+                    currentAudio.pause();
+                    resetPlayButton(currentPlayBtn);
+                }
+            }
+
+            if(songsBtn) songsBtn.addEventListener('click', openSongsModal);
+            if(closeSongsBtn) closeSongsBtn.addEventListener('click', closeSongsModal);
+            if(songsModal) {
+                songsModal.addEventListener('click', (e) => {
+                    if (e.target === songsModal) closeSongsModal();
+                });
+            }
+
+            function resetPlayButton(btn) {
+                if (!btn) return;
+                btn.querySelector('.play-icon').classList.remove('hidden');
+                btn.querySelector('.pause-icon').classList.add('hidden');
+                btn.classList.remove('bg-brand-blue', 'text-white');
+                btn.classList.add('bg-brand-blue/10', 'text-brand-blue');
+            }
+
+            function setPlayingButton(btn) {
+                btn.querySelector('.play-icon').classList.add('hidden');
+                btn.querySelector('.pause-icon').classList.remove('hidden');
+                btn.classList.remove('bg-brand-blue/10', 'text-brand-blue');
+                btn.classList.add('bg-brand-blue', 'text-white');
+            }
+
+            playBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const src = btn.dataset.src;
+                    
+                    // Pause if clicking the currently playing song
+                    if (currentPlayBtn === btn && currentAudio && !currentAudio.paused) {
+                        currentAudio.pause();
+                        resetPlayButton(btn);
+                        return;
+                    }
+
+                    // Stop current audio if playing a different song
+                    if (currentAudio) {
+                        currentAudio.pause();
+                        resetPlayButton(currentPlayBtn);
+                    }
+
+                    // Resume if clicking the same song that was paused
+                    if (currentPlayBtn === btn && currentAudio && currentAudio.paused) {
+                        currentAudio.play();
+                        setPlayingButton(btn);
+                        return;
+                    }
+
+                    // Create and play new audio
+                    currentAudio = new Audio(src);
+                    currentPlayBtn = btn;
+                    
+                    setPlayingButton(btn);
+                    
+                    currentAudio.play().catch(e => {
+                        console.error("Audio playback failed:", e);
+                        showToast('שגיאה בהפעלת השיר (קובץ לא קיים).', 'info');
+                        resetPlayButton(btn);
+                    });
+
+                    currentAudio.onended = () => {
+                        resetPlayButton(btn);
+                    };
+                });
+            });
 
             sessionFab.addEventListener('click', () => {
                 renderSessionList();

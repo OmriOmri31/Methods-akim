@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Hebrew:wght@400;500;700;800&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,7 +18,7 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Rubik', 'sans-serif'],
+                        sans: ['Assistant', 'Noto Sans Hebrew', 'Inter', 'system-ui', 'sans-serif'],
                     },
                     colors: {
                         brand: {
@@ -36,31 +36,261 @@
         }
     </script>
     <style>
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-soft: #f1f5f9;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: rgba(15, 23, 42, 0.12);
+            --accent-ai: #a855f7;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --type-movement: #22c55e;
+            --type-bonding: #f97316;
+            --type-thinking: #8b5cf6;
+            --type-discussion: #ec4899;
+            --type-teamwork: #06b6d4;
+            --type-creative: #14b8a6;
+            --radius-card: 20px;
+            --radius-pill: 999px;
+            --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
+        }
+
+        .dark {
+            --bg: #070914;
+            --surface: #101320;
+            --surface-soft: #171b2d;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.12);
+            --shadow-soft: 0 18px 50px rgba(0, 0, 0, 0.42);
+        }
+
         html { scroll-behavior: smooth; }
-        body { transition: background-color 0.3s, color 0.3s; }
-        .game-card { transition: all 0.3s ease; }
-        .game-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15); }
-        .dark .game-card:hover { box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.4); }
-        .filter-btn.active { box-shadow: 0 0 0 2px var(--bg-color, white), 0 0 0 4px currentColor; transform: scale(0.95); }
-        .dark .filter-btn.active { --bg-color: #0f172a; }
-        
+        body {
+            transition: background-color 0.25s, color 0.25s;
+            background: radial-gradient(circle at top, rgba(139, 92, 246, 0.14), transparent 45%), var(--bg);
+            color: var(--text);
+            font-family: Assistant, "Noto Sans Hebrew", Inter, system-ui, sans-serif;
+        }
+
+        #toastContainer[aria-live] { pointer-events: none; }
+
+        #filterContainer {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            justify-content: flex-start;
+            gap: 8px;
+            padding-bottom: 4px;
+            scrollbar-width: thin;
+        }
+        #filterContainer::-webkit-scrollbar { height: 6px; }
+        #filterContainer::-webkit-scrollbar-thumb { background: #64748b66; border-radius: 999px; }
+        @media (min-width: 1024px) {
+            #filterContainer {
+                flex-wrap: wrap;
+                overflow-x: visible;
+                justify-content: center;
+            }
+        }
+
+        .filter-btn {
+            min-height: 40px;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(8px);
+        }
+        .filter-btn.active {
+            box-shadow: 0 0 0 1px color-mix(in srgb, var(--surface) 50%, transparent), 0 0 0 3px currentColor;
+            transform: scale(0.98);
+        }
+
+        .game-card {
+            position: relative;
+            isolation: isolate;
+            min-height: 330px;
+            border-radius: var(--radius-card);
+            border: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent), var(--surface);
+            box-shadow: var(--shadow-soft);
+            transition: transform 220ms ease, box-shadow 220ms ease;
+            overflow: hidden;
+        }
+        .game-card::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: linear-gradient(135deg, var(--card-accent, #a855f7), var(--accent-cyan), var(--accent-pink));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: -1;
+            opacity: 0.88;
+            pointer-events: none;
+        }
+        .game-card::after {
+            content: "";
+            position: absolute;
+            inset: auto -20% -35% -20%;
+            height: 120px;
+            background: linear-gradient(135deg, var(--card-accent, #a855f7), var(--accent-cyan));
+            filter: blur(34px);
+            opacity: 0.2;
+            z-index: -2;
+            transform: translateY(20px);
+            transition: opacity 220ms ease, transform 220ms ease;
+        }
+        .game-card:hover,
+        .game-card:focus-within {
+            transform: translateY(-4px);
+        }
+        .game-card:hover::after,
+        .game-card:focus-within::after {
+            opacity: 0.36;
+            transform: translateY(8px);
+        }
+
+        .card-title { font-size: 1.33rem; line-height: 1.2; font-weight: 800; letter-spacing: -0.015em; }
+        .card-desc {
+            color: var(--text-muted) !important;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-example {
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: color-mix(in srgb, var(--surface-soft) 90%, transparent) !important;
+        }
+        .badges-container span {
+            border-radius: var(--radius-pill) !important;
+            border: 1px solid var(--border) !important;
+            font-weight: 700 !important;
+        }
+
+        .game-card .absolute.top-4.left-4 {
+            opacity: 1 !important;
+            position: static !important;
+            margin-bottom: 10px;
+            gap: 8px;
+            display: grid !important;
+            grid-template-columns: 1fr 44px 44px;
+            align-items: center;
+        }
+        .method-icon svg { width: 28px; height: 28px; }
+
+        .ai-breakdown-btn, .share-btn, .add-btn {
+            min-height: 44px;
+            min-width: 44px;
+            border-radius: 12px;
+        }
+        .ai-breakdown-btn {
+            justify-content: center;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff !important;
+            background: linear-gradient(135deg, var(--card-accent, #a855f7), var(--accent-cyan)) !important;
+            border: 0;
+        }
+        .ai-breakdown-btn span, .ai-breakdown-btn svg { pointer-events: none; }
+
+        @media (hover: hover) and (pointer: fine) and (min-width: 900px) {
+            .game-card .method-actions .share-btn,
+            .game-card .method-actions .add-btn {
+                opacity: 0.6;
+            }
+            .game-card:hover .method-actions .share-btn,
+            .game-card:hover .method-actions .add-btn,
+            .game-card:focus-within .method-actions .share-btn,
+            .game-card:focus-within .method-actions .add-btn {
+                opacity: 1;
+            }
+        }
+
+        #aiModal > div,
+        #sessionModal > div,
+        #songsModal > div,
+        #tutorialModal > div,
+        #randomModal > div {
+            border: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        @media (max-width: 767px) {
+            #aiModal {
+                align-items: flex-end;
+            }
+            #aiModal > div {
+                width: 100%;
+                max-width: 100%;
+                max-height: 92vh;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+
+        #sessionFab {
+            inset-inline-end: 20px;
+            inset-inline-start: auto !important;
+            min-height: 56px;
+            min-width: 56px;
+        }
+
+        .search-shell {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+            align-items: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            box-shadow: var(--shadow-soft);
+            min-height: 56px;
+            padding-inline: 8px;
+        }
+        .search-shell input {
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+        }
+        .search-meta {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
         @keyframes popIn {
             0% { transform: scale(0.95); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
-        .pop-in { animation: popIn 0.3s ease-out forwards; }
-        
-        /* Custom Scrollbar */
+        .pop-in { animation: popIn 0.28s ease-out forwards; }
+
         .custom-scroll::-webkit-scrollbar { width: 6px; }
         .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
         .dark .custom-scroll::-webkit-scrollbar-thumb { background: #475569; }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0ms !important; transition-duration: 0ms !important; }
+            .game-card:hover { transform: none; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 antialiased">
 
     <!-- Toast Notifications Container -->
-    <div id="toastContainer" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] flex flex-col gap-2 pointer-events-none"></div>
+    <div id="toastContainer" aria-live="polite" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] flex flex-col gap-2 pointer-events-none"></div>
 
     <!-- Header Section -->
     <header class="bg-gradient-to-br from-brand-dark to-slate-700 text-white py-16 shadow-lg relative overflow-hidden transition-colors">
@@ -72,17 +302,17 @@
         <!-- Utility Buttons - Left aligned -->
         <div class="absolute top-4 left-4 md:top-6 md:left-6 z-30 flex gap-2">
             <!-- Songs Button -->
-            <button id="songsBtn" class="bg-white/20 hover:bg-white/30 p-3 rounded-full shadow-md backdrop-blur-sm transition-all cursor-pointer" title="שירי מחנה">
+            <button id="songsBtn" class="bg-white/20 hover:bg-white/30 p-3 rounded-full shadow-md backdrop-blur-sm transition-all cursor-pointer" title="שירי מחנה" aria-label="פתח שירי מחנה">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
             </button>
             
             <!-- Tutorial Button -->
-            <button id="tutorialBtn" class="bg-white/20 hover:bg-white/30 p-3 rounded-full shadow-md backdrop-blur-sm transition-all cursor-pointer" title="איך משתמשים?">
+            <button id="tutorialBtn" class="bg-white/20 hover:bg-white/30 p-3 rounded-full shadow-md backdrop-blur-sm transition-all cursor-pointer" title="איך משתמשים?" aria-label="פתח מדריך שימוש">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </button>
             
             <!-- Dark Mode Toggle -->
-            <button id="themeToggle" class="bg-white/20 hover:bg-white/30 p-3 rounded-full shadow-md backdrop-blur-sm transition-all cursor-pointer" title="החלף מצב תצוגה">
+            <button id="themeToggle" class="bg-white/20 hover:bg-white/30 p-3 rounded-full shadow-md backdrop-blur-sm transition-all cursor-pointer" title="החלף מצב תצוגה" aria-label="החלף מצב תצוגה">
                 <svg id="themeIconSun" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 <svg id="themeIconMoon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
             </button>
@@ -93,12 +323,16 @@
             <p class="text-xl font-light mb-8 opacity-90">ארגז הכלים החכם למדריכי אקים כפר סבא</p>
             
             <!-- Search Bar -->
-            <div class="relative max-w-2xl mx-auto mb-6 group">
+            <div class="relative max-w-2xl mx-auto mb-3 group">
                 <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                     <svg class="w-5 h-5 text-gray-400 group-focus-within:text-brand-blue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
-                <input type="text" id="searchInput" class="block w-full p-4 pr-12 text-gray-900 border-0 rounded-full bg-white shadow-lg focus:ring-4 focus:ring-brand-blue/30 text-lg outline-none transition-all dark:bg-slate-800 dark:text-white" placeholder="חיפוש חופשי (למשל: כדור, שאלות, פתקים...)">
+                <div class="search-shell">
+                    <input type="text" id="searchInput" class="block w-full p-4 pr-12 text-gray-900 rounded-full text-lg outline-none transition-all dark:text-white" placeholder="נסו: תנועה, דיון, זיכרון, עבודת צוות...">
+                    <button id="searchClearBtn" class="px-3 py-2 rounded-full text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-100 transition-colors cursor-pointer" type="button">נקה</button>
+                </div>
             </div>
+            <p id="resultsCount" class="search-meta">מציגים את כל המתודות</p>
 
             <div class="flex flex-col sm:flex-row justify-center items-center gap-3">
                 <button id="randomBtn" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md font-medium py-2 px-6 rounded-full shadow-md transition-all flex items-center gap-2 text-sm hover:scale-105 cursor-pointer">
@@ -121,27 +355,28 @@
         <div class="container mx-auto px-4">
             <div class="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto" id="filterContainer">
                 <button data-filter="movement" data-color="brand-green" class="filter-btn bg-brand-green/10 text-brand-green hover:bg-brand-green hover:text-white px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 shadow-sm cursor-pointer">
-                    🏃‍♂️ תנועה ומרחב
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg> תנועה ומרחב
                 </button>
                 <button data-filter="bonding" data-color="brand-orange" class="filter-btn bg-brand-orange/10 text-brand-orange hover:bg-brand-orange hover:text-white px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 shadow-sm cursor-pointer">
-                    🧊 גיבוש וצחוק
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> גיבוש וצחוק
                 </button>
                 <button data-filter="thinking" data-color="brand-blue" class="filter-btn bg-brand-blue/10 text-brand-blue hover:bg-brand-blue hover:text-white px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 shadow-sm cursor-pointer">
-                    🧠 חשיבה ותחרות
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3a6 6 0 00-3 11.196V17a1 1 0 001 1h4a1 1 0 001-1v-2.804A6 6 0 0012 3z"></path></svg> חשיבה ותחרות
                 </button>
                 <button data-filter="discussion" data-color="brand-purple" class="filter-btn bg-brand-purple/10 text-brand-purple hover:bg-brand-purple hover:text-white px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 shadow-sm cursor-pointer">
-                    🗣️ שיח וערכים
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h8M8 14h5M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4-.8L3 20l1.2-3.2A7.76 7.76 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg> שיח וערכים
                 </button>
                 <button data-filter="teamwork" data-color="brand-teal" class="filter-btn bg-brand-teal/10 text-brand-teal hover:bg-brand-teal hover:text-white px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 shadow-sm cursor-pointer">
-                    🤝 עבודת צוות
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5V9H2v11h5m10 0v-5a3 3 0 00-6 0v5m6 0h-6"></path></svg> עבודת צוות
                 </button>
                 <button data-filter="creative" data-color="brand-rose" class="filter-btn bg-brand-rose/10 text-brand-rose hover:bg-brand-rose hover:text-white px-4 py-2 rounded-full font-medium text-sm transition-all flex items-center gap-1 shadow-sm cursor-pointer">
-                    🎨 יצירה והבעה
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg> יצירה והבעה
                 </button>
             </div>
             <!-- Active Filters Summary -->
-            <div id="filterSummary" class="text-center text-sm font-semibold text-slate-600 dark:text-slate-300 mt-4 hidden bg-slate-100 dark:bg-slate-800 py-2 px-4 rounded-lg flex items-center justify-center gap-1 mx-auto w-max transition-colors">
-                מציג מתודות שהן <span id="filterLogicText" class="text-brand-dark dark:text-white mr-1"></span>
+            <div id="filterSummary" class="text-center text-sm font-semibold text-slate-600 dark:text-slate-300 mt-4 hidden bg-slate-100 dark:bg-slate-800 py-2 px-4 rounded-lg flex items-center justify-center gap-2 mx-auto w-max transition-colors">
+                מציגים מתודות שתואמות <span id="filterLogicText" class="text-brand-dark dark:text-white mr-1"></span>
+                <button id="resetFiltersBtn" class="px-3 py-1 rounded-full bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">אפס פילטרים</button>
             </div>
         </div>
     </nav>
@@ -484,12 +719,12 @@
 
         // 2. CONFIGURATION
         const labelConfig = {
-            'movement': { text: '🏃‍♂️ תנועה', emoji: '🏃‍♂️', classes: 'bg-brand-green/10 text-brand-green border-brand-green/20 dark:bg-brand-green/20', color: 'brand-green' },
-            'bonding': { text: '🧊 גיבוש', emoji: '🧊', classes: 'bg-brand-orange/10 text-brand-orange border-brand-orange/20 dark:bg-brand-orange/20', color: 'brand-orange' },
-            'thinking': { text: '🧠 חשיבה', emoji: '🧠', classes: 'bg-brand-blue/10 text-brand-blue border-brand-blue/20 dark:bg-brand-blue/20', color: 'brand-blue' },
-            'discussion': { text: '🗣️ שיח', emoji: '🗣️', classes: 'bg-brand-purple/10 text-brand-purple border-brand-purple/20 dark:bg-brand-purple/20', color: 'brand-purple' },
-            'teamwork': { text: '🤝 צוות', emoji: '🤝', classes: 'bg-brand-teal/10 text-brand-teal border-brand-teal/20 dark:bg-brand-teal/20', color: 'brand-teal' },
-            'creative': { text: '🎨 יצירה', emoji: '🎨', classes: 'bg-brand-rose/10 text-brand-rose border-brand-rose/20 dark:bg-brand-rose/20', color: 'brand-rose' }
+            'movement': { text: 'תנועה ומרחב', short: 'תנועה', icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>', classes: 'bg-brand-green/10 text-brand-green border-brand-green/20 dark:bg-brand-green/20', color: 'brand-green', token: 'var(--type-movement)' },
+            'bonding': { text: 'גיבוש וצחוק', short: 'גיבוש', icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>', classes: 'bg-brand-orange/10 text-brand-orange border-brand-orange/20 dark:bg-brand-orange/20', color: 'brand-orange', token: 'var(--type-bonding)' },
+            'thinking': { text: 'חשיבה ותחרות', short: 'חשיבה', icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3a6 6 0 00-3 11.196V17a1 1 0 001 1h4a1 1 0 001-1v-2.804A6 6 0 0012 3z"></path></svg>', classes: 'bg-brand-blue/10 text-brand-blue border-brand-blue/20 dark:bg-brand-blue/20', color: 'brand-blue', token: 'var(--type-thinking)' },
+            'discussion': { text: 'שיח וערכים', short: 'שיח', icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h8M8 14h5M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4-.8L3 20l1.2-3.2A7.76 7.76 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>', classes: 'bg-brand-purple/10 text-brand-purple border-brand-purple/20 dark:bg-brand-purple/20', color: 'brand-purple', token: 'var(--type-discussion)' },
+            'teamwork': { text: 'עבודת צוות', short: 'צוות', icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5V9H2v11h5m10 0v-5a3 3 0 00-6 0v5m6 0h-6"></path></svg>', classes: 'bg-brand-teal/10 text-brand-teal border-brand-teal/20 dark:bg-brand-teal/20', color: 'brand-teal', token: 'var(--type-teamwork)' },
+            'creative': { text: 'יצירה והבעה', short: 'יצירה', icon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>', classes: 'bg-brand-rose/10 text-brand-rose border-brand-rose/20 dark:bg-brand-rose/20', color: 'brand-rose', token: 'var(--type-creative)' }
         };
 
         // NEW: CREATIVITY TOOLS DATA (SCAMPER + SIT)
@@ -567,21 +802,22 @@
 
                 // Flexbox used here ensures the emoji and title sit perfectly side-by-side in RTL layout
                 return `
-                <div class="game-card relative bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-md border-x border-b border-slate-100 dark:border-slate-700 border-t-4 border-t-${colorCls} p-6 flex flex-col h-full group transition-colors" data-tags="${item.tags.join(',')}">
-                    <div class="absolute top-4 left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button class="ai-breakdown-btn p-1.5 text-slate-400 hover:text-brand-purple bg-slate-50 dark:bg-slate-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 rounded-lg transition-colors cursor-pointer" title="פרק מתודה לרכיבים עם AI">
+                <div class="game-card relative bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-md border-x border-b border-slate-100 dark:border-slate-700 p-6 flex flex-col h-full group transition-colors" data-tags="${item.tags.join(',')}" style="--card-accent:${conf.token}">
+                    <div class="absolute top-4 left-4 flex gap-2 transition-opacity method-actions">
+                        <button class="ai-breakdown-btn p-1.5 text-slate-400 hover:text-brand-purple bg-slate-50 dark:bg-slate-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 rounded-lg transition-colors cursor-pointer" title="פרק מתודה לרכיבים עם AI" aria-label="פרק מתודה לרכיבים עם AI">
                             <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                            <span class="text-sm font-bold">פירוק AI</span>
                         </button>
-                        <button class="share-btn p-1.5 text-slate-400 hover:text-brand-blue bg-slate-50 dark:bg-slate-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors cursor-pointer" title="שתף מתודה">
-                            <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-5.368m0 5.368l5.662 3.397m-5.662-3.397l5.662-3.397m-.002-1.002a3 3 0 11-5.662-3.397m5.662 3.397l-5.662-3.397M17 19a3 3 0 11-6 0 3 3 0 016 0zm0-14a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <button class="share-btn p-1.5 text-slate-400 hover:text-brand-blue bg-slate-50 dark:bg-slate-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors cursor-pointer" title="שתף מתודה" aria-label="שתף מתודה">
+                            <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H9M17 7v8"></path></svg>
                         </button>
-                        <button class="add-btn p-1.5 text-slate-400 hover:text-brand-rose bg-slate-50 dark:bg-slate-700 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-lg transition-colors cursor-pointer" title="הוסף לפעילות שלי">
+                        <button class="add-btn p-1.5 text-slate-400 hover:text-brand-rose bg-slate-50 dark:bg-slate-700 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-lg transition-colors cursor-pointer" title="הוסף לפעילות שלי" aria-label="הוסף לפעילות שלי">
                             <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </button>
                     </div>
                     
                     <div class="flex items-start gap-3 mb-2 pl-14">
-                        <span class="text-3xl leading-none shrink-0 mt-0.5">${conf.emoji}</span>
+                        <span class="text-3xl leading-none shrink-0 mt-0.5 method-icon">${conf.icon}</span>
                         <h3 class="card-title text-xl font-bold text-${colorCls} leading-tight">${item.title}</h3>
                     </div>
                     
@@ -653,10 +889,12 @@
             // --- D. Filtering System ---
             const searchInput = document.getElementById('searchInput');
             const clearSearchBtn = document.getElementById('clearSearchBtn');
+            const searchClearBtn = document.getElementById('searchClearBtn');
             const filterBtns = document.querySelectorAll('.filter-btn');
             const noResults = document.getElementById('noResults');
             const filterSummary = document.getElementById('filterSummary');
             const filterLogicText = document.getElementById('filterLogicText');
+            const resetFiltersBtn = document.getElementById('resetFiltersBtn');
             
             let activeFilters = new Set();
 
@@ -680,9 +918,26 @@
 
             searchInput.addEventListener('input', applyFilters);
 
+            if (searchClearBtn) {
+                searchClearBtn.addEventListener('click', () => {
+                    searchInput.value = '';
+                    applyFilters();
+                    searchInput.focus();
+                });
+            }
+
             if (clearSearchBtn) {
                 clearSearchBtn.addEventListener('click', () => {
                     searchInput.value = '';
+                    filterBtns.forEach(btn => {
+                        if (btn.classList.contains('active')) btn.click();
+                    });
+                    applyFilters();
+                });
+            }
+
+            if (resetFiltersBtn) {
+                resetFiltersBtn.addEventListener('click', () => {
                     filterBtns.forEach(btn => {
                         if (btn.classList.contains('active')) btn.click();
                     });
@@ -720,12 +975,21 @@
                 
                 if (activeFilters.size > 0) {
                     filterSummary.classList.remove('hidden');
-                    const activeNames = Array.from(activeFilters).map(f => labelConfig[f].text.replace(/[^א-ת\s]/g, '').trim());
+                        const activeNames = Array.from(activeFilters).map(f => labelConfig[f].short);
                     filterLogicText.textContent = activeNames.join(' וגם ');
                 } else {
                     filterSummary.classList.add('hidden');
                 }
+
+                const visibleCount = Array.from(cards).filter(c => c.style.display !== 'none').length;
+                const resultsCount = document.getElementById('resultsCount');
+                if (resultsCount) {
+                    resultsCount.textContent = visibleCount === methodsData.length
+                        ? `מציגים את כל המתודות (${visibleCount})`
+                        : `נמצאו ${visibleCount} מתודות`;
+                }
             }
+            applyFilters();
 
             // --- E. Share & Session Cart ---
             let sessionItems = new Map(); 

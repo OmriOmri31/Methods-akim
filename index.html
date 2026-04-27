@@ -221,22 +221,223 @@
         #sessionModal > div,
         #songsModal > div,
         #tutorialModal > div,
-        #randomModal > div {
+        #randomModal > div,
+        #circleModal > div {
             border: 1px solid var(--border);
             background: var(--surface);
         }
 
         @media (max-width: 767px) {
-            #aiModal {
+            #aiModal,
+            #circleModal {
                 align-items: flex-end;
             }
-            #aiModal > div {
+            #aiModal > div,
+            #circleModal > div {
                 width: 100%;
                 max-width: 100%;
                 max-height: 92vh;
                 border-bottom-left-radius: 0;
                 border-bottom-right-radius: 0;
             }
+        }
+
+        /* מעגל פתיחה — מראה נפרד ממודלי AI גנריים */
+        #circleModal {
+            background:
+                radial-gradient(ellipse 120% 80% at 50% -20%, rgba(249, 115, 22, 0.22), transparent 55%),
+                radial-gradient(ellipse 90% 60% at 100% 100%, rgba(168, 85, 247, 0.12), transparent 45%),
+                rgba(15, 23, 42, 0.78);
+        }
+        .dark #circleModal {
+            background:
+                radial-gradient(ellipse 120% 80% at 50% -20%, rgba(249, 115, 22, 0.18), transparent 55%),
+                radial-gradient(ellipse 90% 60% at 0% 100%, rgba(6, 182, 212, 0.1), transparent 45%),
+                rgba(2, 6, 23, 0.88);
+        }
+        .circle-modal-shell {
+            border-radius: 22px !important;
+            border: 1px solid var(--border) !important;
+            background:
+                linear-gradient(165deg, color-mix(in srgb, var(--surface) 96%, transparent) 0%, var(--surface) 38%, var(--surface-soft) 100%) !important;
+            box-shadow:
+                0 24px 60px rgba(15, 23, 42, 0.18),
+                0 0 0 1px color-mix(in srgb, var(--border) 50%, transparent);
+            overflow: hidden;
+        }
+        .dark .circle-modal-shell {
+            background:
+                linear-gradient(165deg, #12162a 0%, #0f1220 45%, #0c0e18 100%) !important;
+            box-shadow:
+                0 28px 70px rgba(0, 0, 0, 0.55),
+                0 0 0 1px rgba(255, 255, 255, 0.06);
+        }
+        .circle-modal-header {
+            position: relative;
+            padding: 1rem 1.25rem 1rem 3.25rem;
+            border-bottom: 1px solid var(--border);
+            background: color-mix(in srgb, var(--surface) 88%, transparent);
+        }
+        .dark .circle-modal-header {
+            background: color-mix(in srgb, #15192e 92%, transparent);
+        }
+        .circle-modal-header::after {
+            content: "";
+            position: absolute;
+            inset-block: 0;
+            inset-inline-end: 0;
+            width: 5px;
+            background: linear-gradient(180deg, #f97316, #ec4899, #a855f7);
+            border-start-end-radius: 22px;
+        }
+        .circle-modal-body {
+            position: relative;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(249, 115, 22, 0.06), transparent 42%),
+                radial-gradient(circle at 85% 60%, rgba(168, 85, 247, 0.07), transparent 40%),
+                var(--surface-soft);
+        }
+        .dark .circle-modal-body {
+            background:
+                radial-gradient(circle at 20% 15%, rgba(249, 115, 22, 0.08), transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.06), transparent 38%),
+                #0b0d18;
+        }
+        .circle-intro {
+            font-size: 1rem;
+            line-height: 1.65;
+            color: var(--text-muted);
+            border-inline-start: 3px solid color-mix(in srgb, #f97316 55%, transparent);
+            padding-inline-start: 1rem;
+        }
+        .circle-pick-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #f97316;
+        }
+        .dark .circle-pick-label {
+            color: #fb923c;
+        }
+        .circle-pick-card {
+            position: relative;
+            isolation: isolate;
+            border-radius: 18px;
+            padding: 1.35rem 1.4rem 1.35rem 1.5rem;
+            min-height: 5.75rem;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            box-shadow: 0 14px 36px rgba(15, 23, 42, 0.1);
+        }
+        .dark .circle-pick-card {
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
+        }
+        .circle-pick-card::before {
+            content: "\201C";
+            position: absolute;
+            top: 0.45rem;
+            inset-inline-end: 0.65rem;
+            font-size: 2rem;
+            line-height: 1;
+            font-family: Georgia, "Times New Roman", serif;
+            color: color-mix(in srgb, #f97316 28%, transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .circle-pick-card #circleRandomQuestion {
+            position: relative;
+            z-index: 1;
+            padding-inline-end: 2rem;
+        }
+        .circle-bank-heading {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 0.65rem;
+        }
+        .circle-bank-heading span {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+        }
+        #circleQuestionsList {
+            counter-reset: circle-q;
+        }
+        #circleQuestionsList li.circle-q-item {
+            counter-increment: circle-q;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 0.65rem;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: color-mix(in srgb, var(--surface) 94%, transparent);
+            padding: 0.85rem 1rem;
+            font-size: 0.95rem;
+            line-height: 1.55;
+            color: var(--text);
+        }
+        .dark #circleQuestionsList li.circle-q-item {
+            background: color-mix(in srgb, #161a2e 92%, transparent);
+        }
+        #circleQuestionsList li.circle-q-item::before {
+            content: counter(circle-q);
+            position: static;
+            flex-shrink: 0;
+            margin-top: 0.12em;
+            width: 1.65rem;
+            height: 1.65rem;
+            display: grid;
+            place-items: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            border-radius: 999px;
+            background: color-mix(in srgb, #f97316 18%, transparent);
+            color: #c2410c;
+            border: 1px solid color-mix(in srgb, #f97316 35%, transparent);
+        }
+        .dark #circleQuestionsList li.circle-q-item::before {
+            color: #fdba74;
+            background: color-mix(in srgb, #f97316 22%, transparent);
+            border-color: color-mix(in srgb, #f97316 40%, transparent);
+        }
+        .circle-footer {
+            background: var(--surface) !important;
+            border-top: 1px solid var(--border) !important;
+        }
+        .dark .circle-footer {
+            background: #101320 !important;
+        }
+        .circle-random-cta {
+            width: 100%;
+            min-height: 48px;
+            border-radius: 14px;
+            font-weight: 800;
+            color: #fff;
+            border: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #ea580c 0%, #ec4899 48%, #a855f7 100%);
+            box-shadow: 0 10px 28px rgba(236, 72, 153, 0.35);
+            transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        }
+        .circle-random-cta:hover {
+            filter: brightness(1.06);
+            box-shadow: 0 12px 32px rgba(236, 72, 153, 0.42);
+        }
+        .circle-random-cta:active {
+            transform: scale(0.98);
+        }
+        .circle-random-cta:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px color-mix(in srgb, #fff 50%, transparent), 0 10px 28px rgba(236, 72, 153, 0.35);
         }
 
         #sessionFab {
@@ -269,13 +470,13 @@
             color: var(--text-muted);
             text-align: center;
         }
-
+        
         @keyframes popIn {
             0% { transform: scale(0.95); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
         .pop-in { animation: popIn 0.28s ease-out forwards; }
-
+        
         .custom-scroll::-webkit-scrollbar { width: 6px; }
         .custom-scroll::-webkit-scrollbar-track { background: transparent; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
@@ -305,6 +506,18 @@
             <button id="songsBtn" class="bg-white/20 hover:bg-white/30 p-3 rounded-full shadow-md backdrop-blur-sm transition-all cursor-pointer" title="שירי מחנה" aria-label="פתח שירי מחנה">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
             </button>
+
+            <!-- Circle opening questions — אייקון מעגל + נקודות (סבב), לא פנים/אימוג'י -->
+            <button id="circleQuestionsBtn" type="button" class="bg-white/20 hover:bg-white/30 p-3 rounded-full shadow-md backdrop-blur-sm transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800" title="שאלות פתיחה במעגל" aria-label="פתח מאגר שאלות למעגל פתיחה" aria-expanded="false" aria-controls="circleModalPanel">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                    <circle cx="12" cy="12" r="8.5" stroke-width="1.75" stroke-dasharray="2.6 2.9" stroke-linecap="round"/>
+                    <circle cx="12" cy="4.25" r="1.45" fill="currentColor" stroke="none"/>
+                    <circle cx="18.15" cy="8.55" r="1.45" fill="currentColor" stroke="none"/>
+                    <circle cx="15.85" cy="16.8" r="1.45" fill="currentColor" stroke="none"/>
+                    <circle cx="8.15" cy="16.8" r="1.45" fill="currentColor" stroke="none"/>
+                    <circle cx="5.85" cy="8.55" r="1.45" fill="currentColor" stroke="none"/>
+                </svg>
+            </button>
             
             <!-- Tutorial Button -->
             <button id="tutorialBtn" class="bg-white/20 hover:bg-white/30 p-3 rounded-full shadow-md backdrop-blur-sm transition-all cursor-pointer" title="איך משתמשים?" aria-label="פתח מדריך שימוש">
@@ -330,7 +543,7 @@
                 <div class="search-shell">
                     <input type="text" id="searchInput" class="block w-full p-4 pr-12 text-gray-900 rounded-full text-lg outline-none transition-all dark:text-white" placeholder="נסו: תנועה, דיון, זיכרון, עבודת צוות...">
                     <button id="searchClearBtn" class="px-3 py-2 rounded-full text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-100 transition-colors cursor-pointer" type="button">נקה</button>
-                </div>
+            </div>
             </div>
             <p id="resultsCount" class="search-meta">מציגים את כל המתודות</p>
 
@@ -640,6 +853,51 @@
         </div>
     </div>
 
+    <!-- Circle opening questions bank -->
+    <div id="circleModal" class="fixed inset-0 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="circleModalTitle">
+        <div id="circleModalPanel" class="circle-modal-shell bg-white dark:bg-slate-800 w-11/12 max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
+            <div class="circle-modal-header flex justify-between items-center gap-3 shrink-0">
+                <h2 id="circleModalTitle" class="text-lg md:text-xl font-extrabold text-slate-800 dark:text-slate-100 flex items-center gap-2.5">
+                    <svg class="w-7 h-7 shrink-0 text-orange-500 dark:text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <circle cx="12" cy="12" r="8.5" stroke-width="1.75" stroke-dasharray="2.6 2.9" stroke-linecap="round"/>
+                        <circle cx="12" cy="4.25" r="1.45" fill="currentColor" stroke="none"/>
+                        <circle cx="18.15" cy="8.55" r="1.45" fill="currentColor" stroke="none"/>
+                        <circle cx="15.85" cy="16.8" r="1.45" fill="currentColor" stroke="none"/>
+                        <circle cx="8.15" cy="16.8" r="1.45" fill="currentColor" stroke="none"/>
+                        <circle cx="5.85" cy="8.55" r="1.45" fill="currentColor" stroke="none"/>
+                    </svg>
+                    שאלות פתיחה במעגל
+                </h2>
+                <button id="closeCircleBtn" type="button" class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition-colors cursor-pointer shrink-0 rounded-lg p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900" aria-label="סגור חלון שאלות המעגל">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <div class="circle-modal-body p-5 md:p-8 overflow-y-auto custom-scroll grow space-y-6">
+                <p class="circle-intro">כדי לגוון בשיחות פתיחה, הנה בנק שאלות שאפשר לשאול. כמובן שהרבה מהן יצטרכו להיות מונגשות בהתאם לקבוצה/ לאדם הנשאל</p>
+
+                <div>
+                    <p class="circle-pick-label mb-2">שאלה לשיחת פתיחה</p>
+                    <div id="circleRandomWrap" class="circle-pick-card">
+                        <p id="circleRandomQuestion" class="text-lg md:text-xl font-bold text-slate-800 dark:text-slate-100 leading-snug" aria-live="polite">לחצו למטה כדי להגריל שאלה לשיחת פתיחה.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="circle-bank-heading"><span aria-hidden="true"></span> כל השאלות במאגר <span aria-hidden="true"></span></h3>
+                    <ol id="circleQuestionsList" class="list-none space-y-2 p-0 m-0"></ol>
+                </div>
+            </div>
+
+            <div class="circle-footer p-4 shrink-0">
+                <button id="circleRandomBtn" type="button" class="circle-random-cta">
+                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    הגרל שאלה אקראית
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- JS Logic: Data Generation & Interactivity -->
     <script>
         // 1. DATA: ALL 71 METHODS (Ensures no truncation!)
@@ -767,6 +1025,89 @@
             { year: "מחנה קיץ 2012", name: "מוזיקה", path: "KfarSongs/מוזיקה.mp3" },
             { year: "מחנה קיץ 2011", name: "אגדות", path: "KfarSongs/אגדות.mp3" },
             { year: "מחנה קיץ 2010", name: "שם השיר", path: "" }
+        ];
+
+        /** שאלות פתיחה במעגל — נוסח מדויק כפי שנמסר */
+        const circleQuestionsData = [
+            "מה עשית השבוע?",
+            "איזה כוח על היית רוצה שיהיה לך? מה היית עושה איתו?",
+            "מה הספורט האהוב עליך?",
+            "אם היית חייב לאכול מאכל אחד כל החיים, מה היית בוחר?",
+            "איזו תכונה הכי חשובה בעיניך בחבר טוב?",
+            "איזו מחמאה אתה יכול לתת לחבר שיושב לידך/ מישהו אחר במעגל?",
+            "מה אתה מאחל לעצמך?",
+            "מה הדבר שאתה הכי אוהב במועדון?",
+            "איזה דבר חדש למדת לאחרונה?",
+            "איזה תחום היית רוצה להבין בו יותר?",
+            "איזו משימה בבית או בעבודה אתה עושה טוב?",
+            "מה החיה האהובה עליך? למה?",
+            "באיזה מקום בעולם היית רוצה לבקר? למה?",
+            "איזה מקצוע בבית הספר הכי אהבת, ומה מעניין בו?",
+            "איזה דמות מפורסמת הכי היית רוצה לפגוש?",
+            "מה עוזר לך להתרכז כשיש הרבה רעש מסביב?",
+            "מה עוזר לך להירגע כשאתה עצבני?",
+            "איזה שיר נותן לך אנרגיה טובה?",
+            "אם היית חיה, איזה חיה היית, למה?",
+            "מה הסדרה, סרט האהובים עליך? מה אתה אוהב בה?",
+            "איזו פעילות היית רוצה שנעשה במועדון?",
+            "מה מפריע לך שאנשים אחרים עושים?",
+            "ממה אתה מפחד? איך אתה מתמודד עם הפחד?",
+            "האם יש לך חלום שאתה רוצה להגשים?",
+            "תן משפט טוב או עצה טובה ששמעת פעם",
+            "איזה יום בשבוע אתה הכי אוהב, ומה מיוחד בו?",
+            "מה הדבר שאתה הכי מעריך/ אוהב באנשים?",
+            "איזו מטרה קטנה היית רוצה להשיג החודש?",
+            "מה הופך משחק או פעילות למהנים בעיניך?",
+            "איזה נושא בעולם מעניין אותך במיוחד?",
+            "איזה חוק היית מוסיף למועדון כדי שיהיה פה טוב יותר?",
+            "איזה דבר אתה עושה היום טוב יותר מבעבר?",
+            "מה היית רוצה שידעו עליך בקבוצה?",
+            "מה אתה יכול לעשות כדי לגרום למועדון להיות טוב יותר?",
+            "מה גורם לך להרגיש שייכות לקבוצה?",
+            "איזה דבר קטן יכול לשפר למישהו את היום?",
+            "מה היית עושה אם היית מנהל את המועדון?",
+            "מה לדעתך הופך אדם לאדם טוב?",
+            "מה היית רוצה לעשות ביחד עם כל חברי המועדון?",
+            "למה אתה מגיע לאקים?",
+            "ספר על משהו שאתה גאה בו.",
+            "איך לדעתך אפשר להפוך להיות שמח יותר?",
+            "איזה דבר אתה מעריך/ אוהב במישהו אחר?",
+            "איפה אתה גר? עם מי? היית רוצה לגור במקום אחר?",
+            "אם לא היו קוראים לך בשם שלך, איך היית רוצה שיקראו לך?",
+            "מתי בפעם האחרונה עשית משהו בשביל מישהו? מה זה היה?",
+            "חוץ מבמועדון, איפה אתה אוהב להיות?",
+            "מה היית רוצה ללמוד לעשות בלי עזרה, בצורה עצמאית?",
+            "איזה דבר אתה עושה כשאתה רוצה לעודד מישהו?",
+            "מה לדעתך ההבדל בין ביטחון עצמי לבין להשוויץ?",
+            "איזו תכונה היית רוצה לראות יותר אצל אנשים סביבך?",
+            "מה אנשים צריכים לעשות כדי שיהיה יותר נחמד במדינה?",
+            "מהו דבר שאתה מתמיד בו?",
+            "האם אתה מבקש עזרה כשצריך או שאתה עקשן ומנסה לבד?",
+            "מה היית רוצה לנסות בפעם הראשונה?",
+            "מה לדעתך הופך שיחה לשיחה טובה?",
+            "מה אתה עושה כשמישהו לא מסכים איתך?",
+            "ספר לנו על פאדיחה שעשית.",
+            "מה גורם לך להרגיש גאווה?",
+            "האם היית רוצה לעשות עוד דברים במועדון? כמו מה?",
+            "באיזה דבר אתה עוזר בלי שמבקשים ממך?",
+            "איזה נושא חשוב לדעתך לדבר עליו יותר?",
+            "אם היית ראש הממשלה, מה הדבר הראשון שהיית עושה?",
+            "מתי פעם אחרונה שממש התרגשת?",
+            "אם היית מקבל 100 מליון דולר, מה היית עושה?",
+            "אם היית יכול לעבוד בכל עבודה בעולם, במה היית עובד?",
+            "מה הדבר שאתה הכי אוהב באקים?",
+            "מי החבר הכי טוב שלך? למה אתם חברים?",
+            "מה אתה מעדיף? בריכה או ים? למה? מתי היית פעם אחרונה?",
+            "איזה דבר אתה עושה כדי לשמור על מצב רוח טוב?",
+            "על איזה נושא היית רוצה שתהיה פעילות? למה?",
+            "אם היית יכול לבקש שלוש משאלות/ משאלה אחת, מה היית מבקש?",
+            "מה אתה הכי אוהב במדינה?",
+            "ספר על זיכרון טוב שיש לך מאקים.",
+            "אם היית יכול לומר דבר אחד שכל המדינה/ העולם היו שומעים, מה היית אומר?",
+            "ספר על זיכרון טוב שיש לך מהבית ספר.",
+            "מה אתה אוהב בעבודה/ במסגרת שלך?",
+            "מה החג האהוב עליך? למה?",
+            "מי הזמר/ להקה/ שיר שאתה הכי אוהב?"
         ];
 
         // 4. CORE LOGIC
@@ -1507,6 +1848,74 @@
             if(songsModal) {
                 songsModal.addEventListener('click', (e) => {
                     if (e.target === songsModal) closeSongsModal();
+                });
+            }
+
+            // --- Circle opening questions modal ---
+            const circleQuestionsBtn = document.getElementById('circleQuestionsBtn');
+            const circleModal = document.getElementById('circleModal');
+            const closeCircleBtn = document.getElementById('closeCircleBtn');
+            const circleRandomBtn = document.getElementById('circleRandomBtn');
+            const circleRandomQuestionEl = document.getElementById('circleRandomQuestion');
+            const circleQuestionsListEl = document.getElementById('circleQuestionsList');
+            let lastCirclePick = -1;
+
+            function renderCircleQuestionsList() {
+                if (!circleQuestionsListEl || circleQuestionsListEl.dataset.rendered === '1') return;
+                circleQuestionsListEl.innerHTML = '';
+                circleQuestionsData.forEach((q) => {
+                    const li = document.createElement('li');
+                    li.className = 'circle-q-item';
+                    li.textContent = q;
+                    circleQuestionsListEl.appendChild(li);
+                });
+                circleQuestionsListEl.dataset.rendered = '1';
+            }
+
+            function pickRandomCircleQuestion() {
+                if (!circleRandomQuestionEl || circleQuestionsData.length === 0) return;
+                let idx;
+                if (circleQuestionsData.length === 1) {
+                    idx = 0;
+                } else {
+                    do {
+                        idx = Math.floor(Math.random() * circleQuestionsData.length);
+                    } while (idx === lastCirclePick);
+                }
+                lastCirclePick = idx;
+                circleRandomQuestionEl.textContent = circleQuestionsData[idx];
+                circleRandomQuestionEl.classList.remove('pop-in');
+                void circleRandomQuestionEl.offsetWidth;
+                circleRandomQuestionEl.classList.add('pop-in');
+            }
+
+            function openCircleModal() {
+                renderCircleQuestionsList();
+                if (circleModal) {
+                    circleModal.classList.remove('pointer-events-none', 'opacity-0');
+                    circleModal.firstElementChild.classList.remove('scale-95');
+                    circleModal.firstElementChild.classList.add('scale-100');
+                    document.body.style.overflow = 'hidden';
+                }
+                if (circleQuestionsBtn) circleQuestionsBtn.setAttribute('aria-expanded', 'true');
+            }
+
+            function closeCircleModal() {
+                if (circleModal) {
+                    circleModal.classList.add('pointer-events-none', 'opacity-0');
+                    circleModal.firstElementChild.classList.add('scale-95');
+                    circleModal.firstElementChild.classList.remove('scale-100');
+                    document.body.style.overflow = '';
+                }
+                if (circleQuestionsBtn) circleQuestionsBtn.setAttribute('aria-expanded', 'false');
+            }
+
+            if (circleQuestionsBtn) circleQuestionsBtn.addEventListener('click', openCircleModal);
+            if (closeCircleBtn) closeCircleBtn.addEventListener('click', closeCircleModal);
+            if (circleRandomBtn) circleRandomBtn.addEventListener('click', pickRandomCircleQuestion);
+            if (circleModal) {
+                circleModal.addEventListener('click', (e) => {
+                    if (e.target === circleModal) closeCircleModal();
                 });
             }
 

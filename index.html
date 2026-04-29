@@ -193,6 +193,13 @@
             min-width: 44px;
             border-radius: 12px;
         }
+        .share-btn, .add-btn {
+            display: grid;
+            place-items: center;
+        }
+        .share-btn svg, .add-btn svg {
+            margin: 0;
+        }
         .ai-breakdown-btn {
             justify-content: center;
             display: inline-flex;
@@ -496,7 +503,7 @@
     <!-- Header Section -->
     <header class="bg-gradient-to-br from-brand-dark to-slate-700 text-white py-16 shadow-lg relative overflow-hidden transition-colors">
         <!-- Logo - Right aligned for RTL (Interactive scaling) -->
-        <div id="logoContainer" class="absolute top-4 right-4 md:top-6 md:right-6 z-50 transition-transform duration-300 origin-top-right cursor-pointer md:hover:scale-[2.5]">
+        <div id="logoContainer" class="absolute top-4 right-4 md:top-6 md:right-6 z-50 transition-transform duration-300 origin-top-right cursor-pointer md:hover:scale-[2.7]">
             <img src="logo.png" alt="לוגו אקים כפר סבא" class="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover shadow-lg">
         </div>
 
@@ -533,7 +540,7 @@
 
         <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl mt-6 md:mt-0">
             <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-md tracking-tight">ספריית המתודות</h1>
-            <p class="text-xl font-light mb-8 opacity-90">ארגז הכלים החכם למדריכי אקים כפר סבא</p>
+            <p class="text-xl font-light mb-8 opacity-90">ארגז הכלים למדריכי אקים כפר סבא</p>
             
             <!-- Search Bar -->
             <div class="relative max-w-2xl mx-auto mb-3 group">
@@ -547,14 +554,14 @@
             </div>
             <p id="resultsCount" class="search-meta">מציגים את כל המתודות</p>
 
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-3">
+            <div class="flex flex-col justify-center items-center gap-3">
+                <button id="topicBreakdownBtn" class="bg-brand-purple/90 hover:bg-brand-purple text-white border border-brand-purple backdrop-blur-md font-medium py-2 px-6 rounded-full shadow-md transition-all flex items-center gap-2 text-sm hover:scale-105 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    פרק את נושא הפעילות לרכיבים
+                </button>
                 <button id="randomBtn" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md font-medium py-2 px-6 rounded-full shadow-md transition-all flex items-center gap-2 text-sm hover:scale-105 cursor-pointer">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                     הגרל שילוב מתודות
-                </button>
-                <button id="topicBreakdownBtn" class="bg-brand-purple/90 hover:bg-brand-purple text-white border border-brand-purple backdrop-blur-md font-medium py-2 px-6 rounded-full shadow-md transition-all flex items-center gap-2 text-sm hover:scale-105 cursor-pointer">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                    פרק נושא לרכיבים
                 </button>
             </div>
         </div>
@@ -617,7 +624,7 @@
     <div class="container mx-auto px-6 pb-16 max-w-5xl">
         <section class="bg-gradient-to-r from-brand-orange to-brand-rose rounded-3xl p-8 md:p-10 text-center text-white shadow-lg relative overflow-hidden transition-transform hover:scale-[1.01] duration-300">
             <h2 class="text-2xl md:text-3xl font-bold mb-3 relative z-10">יש לכם מתודה פצצה? 💣</h2>
-            <p class="mb-6 opacity-90 text-lg relative z-10">המאגר נבנה עבור מדריכי ההווה והעתיד, נשמח לרעיונות חדשים!</p>
+            <p class="mb-6 opacity-90 text-lg relative z-10">נשמח שתחדשו למדריכים ולחניכים עם מתודות חדשות</p>
             <a href="https://forms.gle/fuMYfQLB7kjCDd2G6" target="_blank" rel="noopener noreferrer" class="inline-block bg-white text-brand-orange font-bold py-3 px-8 rounded-full shadow hover:shadow-lg transform transition relative z-10">הצעת מתודה חדשה</a>
             <!-- Decor inside banner -->
             <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 rounded-full bg-white opacity-10 blur-xl pointer-events-none"></div>
@@ -1147,7 +1154,7 @@
                     <div class="absolute top-4 left-4 flex gap-2 transition-opacity method-actions">
                         <button class="ai-breakdown-btn p-1.5 text-slate-400 hover:text-brand-purple bg-slate-50 dark:bg-slate-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 rounded-lg transition-colors cursor-pointer" title="פרק מתודה לרכיבים עם AI" aria-label="פרק מתודה לרכיבים עם AI">
                             <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                            <span class="text-sm font-bold">פירוק AI</span>
+                            <span class="text-sm font-bold">פירוק המתודה</span>
                         </button>
                         <button class="share-btn p-1.5 text-slate-400 hover:text-brand-blue bg-slate-50 dark:bg-slate-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors cursor-pointer" title="שתף מתודה" aria-label="שתף מתודה">
                             <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H9M17 7v8"></path></svg>
@@ -1766,13 +1773,13 @@
             logoContainer.addEventListener('click', (e) => {
                 if (window.innerWidth < 768) {
                     e.stopPropagation();
-                    logoContainer.classList.toggle('scale-[2.5]');
+                    logoContainer.classList.toggle('scale-[2.7]');
                 }
             });
 
             document.addEventListener('click', () => {
-                if (window.innerWidth < 768 && logoContainer.classList.contains('scale-[2.5]')) {
-                    logoContainer.classList.remove('scale-[2.5]');
+                if (window.innerWidth < 768 && logoContainer.classList.contains('scale-[2.7]')) {
+                    logoContainer.classList.remove('scale-[2.7]');
                 }
             });
 
